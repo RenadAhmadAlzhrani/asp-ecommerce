@@ -18,7 +18,7 @@ public class DatabaseContext
             new Product(1,3333,"bag", "pic1", 44.5),
              new Product(2,4444,"purse", "pic2", 44.5),
              new Product(3,5555,"shirt", "pic3", 44.5),
-
+        ]
             users = [
                 new User( "Aishah", "AlSaud" , "123456" , "Aishah@gmail.com", "0544444444"),
                 new User(  "Renad", "AlZahrani", "654321",  "Renad@gmail.com" ,"0533333344"),

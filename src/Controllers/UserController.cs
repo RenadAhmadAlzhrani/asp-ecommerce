@@ -1,6 +1,7 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
+using CodeCrafters_backend_teamwork.src.Utility;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,7 @@ public class UserController : BaseController
    public ActionResult<User> CreateOne([FromBody] User user)
    { if (user is not null)
    {
+      PasswordUtils.HashPassword(user.Password, out string hashedPassword);
        var createdUser = _userService.CreateOne(user);
        return CreatedAtAction(nameof(CreateOne),createdUser);
    } 
