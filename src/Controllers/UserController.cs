@@ -37,6 +37,7 @@ public class UserController : BaseController
    [HttpPost]
    [ProducesResponseType(StatusCodes.Status201Created)]
    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+   
    public ActionResult<User> CreateOne([FromBody] User user)
    { if (user is not null)
    {
