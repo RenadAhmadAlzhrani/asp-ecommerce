@@ -14,6 +14,6 @@ public OrderItem FindOne(OrderItem orderItem);
 public OrderItem CreateOne(OrderItem orderItem);
 public OrderItem UpdateOne(OrderItem orderItem);
 public OrderItem DeleteAll(string id);
-
+// rnd
  
  }
