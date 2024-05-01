@@ -26,17 +26,17 @@ public class ProductService : IProductService
         return _productRepository.CreateOne(product);
     }
 
-    public Product? FindOne(int productId)
+    public Product? FindOne(Guid productId)
     {
         return _productRepository.FindOne(productId);
     }
 
-    public IEnumerable<Product>? DeleteProduct(int productId)
+    public IEnumerable<Product>? DeleteProduct(Guid productId)
     {
         return _productRepository.DeleteProduct(productId);
     }
 
-    public Product UpdateOne(int productId, Product updatedProduct)
+    public Product UpdateOne(Guid productId, Product updatedProduct)
     {
         return _productRepository.UpdateOne(productId, updatedProduct);
     }
