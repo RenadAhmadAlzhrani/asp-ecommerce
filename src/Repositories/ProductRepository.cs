@@ -27,12 +27,12 @@ public class ProductRepository : IProductRepository
         return _products;
 
     }
-    public Product? FindOne(int productId)
+    public Product? FindOne(Guid productId)
     {
         Product? product = _products.FirstOrDefault(product => product.Id == productId);
         return product;
     }
-    public IEnumerable<Product>? DeleteProduct(int productId)
+    public IEnumerable<Product>? DeleteProduct(Guid productId)
     {
         Product? product = FindOne(productId);
         if (product != null)
@@ -43,7 +43,7 @@ public class ProductRepository : IProductRepository
         }
         return null;
     }
-    public Product UpdateOne(int productId, Product updatedProduct)
+    public Product UpdateOne(Guid productId, Product updatedProduct)
     {
 
         Product? product = _products.FirstOrDefault(product => product.Id == productId);

@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+// using Microsoft.AspNetCore.Mvc;
 
-namespace CodeCrafters_backend_teamwork.src.Controllers;
+// namespace CodeCrafters_backend_teamwork.src.Controllers;
 
-    [ApiController]
+//     [ApiController]
 
-    [Route("api/v1/[controller]s")]
-    public abstract class BaseController : ControllerBase
-    {
-    }           
+//     [Route("api/v1/[controller]s")]
+//     public abstract class BaseController : ControllerBase
+//     {
+//     }           
 

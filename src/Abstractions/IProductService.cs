@@ -10,7 +10,7 @@ public interface IProductService
 {
     public IEnumerable<Product> FindMany();
     public IEnumerable<Product> CreateOne(Product product);
-    public Product? FindOne(int productId);
-    public IEnumerable<Product>? DeleteProduct(int productId);
-    public Product UpdateOne(int productId, Product updatedProduct);
+    public Product? FindOne(Guid productId);
+    public IEnumerable<Product>? DeleteProduct(Guid productId);
+    public Product UpdateOne(Guid productId, Product updatedProduct);
 }

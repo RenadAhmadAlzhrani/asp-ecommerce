@@ -15,6 +15,8 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IStockService, StockService>();
+builder.Services.AddScoped<IStockRepository, StockRepository>();
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true); //lowercase
 

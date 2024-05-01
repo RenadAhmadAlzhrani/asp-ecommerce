@@ -24,7 +24,7 @@ public class ProductController : CustomizedController
         return _productService.FindMany();
     }
     [HttpGet("{productId}")]
-    public Product? FindOne(int productId)
+    public Product? FindOne(Guid productId)
     {
         return _productService.FindOne(productId);
     }
@@ -36,12 +36,12 @@ public class ProductController : CustomizedController
 
     }
     [HttpDelete("{productId}")]
-    public IEnumerable<Product>? DeleteProduct([FromRoute] int productId)
+    public IEnumerable<Product>? DeleteProduct([FromRoute] Guid productId)
     {
         return _productService.DeleteProduct(productId);
     }
     [HttpPatch("{productId}")]
-    public Product UpdateOne(int productId, Product updatedProduct)
+    public Product UpdateOne(Guid productId, Product updatedProduct)
     {
         return _productService.UpdateOne(productId, updatedProduct);
     }
