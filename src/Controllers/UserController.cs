@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CodeCrafters_backend_teamwork.src.Controllers;
 
 
-public class UserController : BaseController
+public class UserController : CustomizedController
 {
    private IUserService _userService;
 

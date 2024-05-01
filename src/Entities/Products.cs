@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 namespace CodeCrafters_backend_teamwork.src.Entities;
 public class Product
 {
-    public int Id { get; set; }
-    public int CategoryId { get; set; }
+    public Guid Id { get; set; }
+    public Guid CategoryId { get; set; }
     public string Name { get; set; }
 
     public string Image { get; set; }
     public double Price { get; set; }
 
-    public Product(int id, int categoryId, string name, string image, double price)
+    public Product(string name, string image, double price)
     {
-        Id = id;
-        CategoryId = categoryId;
+        Id = Guid.NewGuid();
+        CategoryId = Guid.NewGuid();
         Name = name;
         Image = image;
         Price = price;
