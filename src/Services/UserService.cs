@@ -1,38 +1,59 @@
+using System.Text;
+using AutoMapper;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
+using CodeCrafters_backend_teamwork.src.Utility;
 
 namespace CodeCrafters_backend_teamwork.src.Services;
 
 public class UserService : IUserService
 {
     private IUserRepository _userRepository;
+    private IConfiguration _config;
+    private IMapper _mapper;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IConfiguration config, IMapper mapper)
     {
         _userRepository = userRepository;
+        _config = config;
+        _mapper = mapper;
     }
 
 
-    public List<User> FindMany()
+    public IEnumerable<UserReadDto> FindMany()
     {
-        return _userRepository.FindMany();
+        var users = _userRepository.FindMany();
+        var usersRead = users.Select(_mapper.Map<UserReadDto>);
+        return usersRead.ToList();
     }
 
 
-    public User CreateOne(User user)
+    public User? CreateOne(User user)
     {
-        User foundUser = _userRepository.FindOneByEmail(user.Email);
+        var foundUser = _userRepository.FindOneByEmail(user.Email);
+        Console.WriteLine($"Create One method triggers");
+
         if (foundUser is not null)
         {
+            Console.WriteLine($"item is found");
             return null;
         }
+        byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
+
+        PasswordUtils.HashPassword(user.Password, out string hashedPassword,
+        pepper);
+        user.Password = hashedPassword;
         return _userRepository.CreateOne(user);
     }
 
-    public User? FindOneByEmail(string email)
+    public UserReadDto? FindOneByEmail(string email)
     {
-        return _userRepository.FindOneByEmail(email);
+        User? user = _userRepository.FindOneByEmail(email);
+        UserReadDto? usersRead = _mapper.Map<UserReadDto>(user);
+        return usersRead;
+
     }
 
     public User? UpdateOne(string email, User newValue)
@@ -41,10 +62,10 @@ public class UserService : IUserService
         if (user is not null)
         {
             user.FirstName = newValue.FirstName;
-           return _userRepository.UpdateOne(user);
+            return _userRepository.UpdateOne(user);
         }
-       return null; 
+        return null;
     }
-    
+
 
 }

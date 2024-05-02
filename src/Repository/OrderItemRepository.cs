@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Controllers;
+using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Service;
 
@@ -10,7 +11,7 @@ namespace CodeCrafters_backend_teamwork.src.Repository
 {
    public class OrderItemRepository : IOrderItemRepository
     {
-        IEnumerable<OrderItem> orderitem;
+        IEnumerable<OrderItem> Orderitem;
 
         public OrderItemRepository()
         {
