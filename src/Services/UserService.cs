@@ -44,6 +44,7 @@ public class UserService : IUserService
 
         PasswordUtils.HashPassword(user.Password, out string hashedPassword,
         pepper);
+        
         user.Password = hashedPassword;
         return _userRepository.CreateOne(user);
     }

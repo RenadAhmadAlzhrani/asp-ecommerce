@@ -11,7 +11,7 @@ namespace CodeCrafters_backend_teamwork.src.Databases;
 public class DatabaseContext
 {
     public IEnumerable<Product> products { get; }
-    public IEnumerable<User> uesers { get; }
+    public IEnumerable<User> Users { get; }
     public IEnumerable<Stock> stocks { get; }
 
     public DatabaseContext()
@@ -24,11 +24,11 @@ public class DatabaseContext
         stocks = [
             new Stock("bag", "pic1", "44.5")];
 
-        users = [
-            new User( "Aishah", "AlSaud" , "123456" , "Aishah@gmail.com", "0544444444"),
-            new User(  "Renad", "AlZahrani", "654321",  "Renad@gmail.com" ,"0533333344"),
-            new User( "Raneem", "AlMutairi", "098765", "Raneem@gmail.com", "0555555544"),
-            new User( "Bashayer", "AlWahbi", "567890", "Bashayer@gmail.com", "0566666644"),
+        Users = [
+            new User(1, "Aishah", "AlSaud" , "123456" , "Aishah@gmail.com", "0544444444"),
+            new User(2,  "Renad", "AlZahrani", "654321",  "Renad@gmail.com" ,"0533333344"),
+            new User(3, "Raneem", "AlMutairi", "098765", "Raneem@gmail.com", "0555555544"),
+            new User(4, "Bashayer", "AlWahbi", "567890", "Bashayer@gmail.com", "0566666644"),
 
         ];
     }

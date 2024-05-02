@@ -12,7 +12,7 @@ public class UserController : CustomizedController
    private IUserService _userService;
 
    public UserController(IUserService userService)
-   {
+   { 
       _userService = userService;
    }
 
@@ -38,13 +38,13 @@ public class UserController : CustomizedController
    [HttpPost]
    [ProducesResponseType(StatusCodes.Status201Created)]
    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
    public ActionResult<User> CreateOne([FromBody] User user)
    {
       Console.WriteLine($"{user.Email}");
 
       if (user is not null)
       {
-
          var createdUser = _userService.CreateOne(user);
          return CreatedAtAction(nameof(CreateOne), createdUser);
       }

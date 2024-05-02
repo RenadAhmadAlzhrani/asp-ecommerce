@@ -9,7 +9,7 @@ public class UserRepository : IUserRepository
      private IEnumerable<User> _users;
      public UserRepository()
      {
-          _users = new DatabaseContext().users;
+          _users = new DatabaseContext().Users;
      }
 
      public IEnumerable<User> FindMany()
@@ -18,7 +18,7 @@ public class UserRepository : IUserRepository
      }
      public User CreateOne(User user)
      {
-         _users = _users.Append(user);
+          _users = _users.Append(user);
           return user;
      }
 
