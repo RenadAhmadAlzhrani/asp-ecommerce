@@ -11,7 +11,7 @@ namespace CodeCrafters_backend_teamwork.src.Databases;
 public class DatabaseContext
 {
     public IEnumerable<Product> products { get; }
-    public IEnumerable<User> uesers { get; }
+    public IEnumerable<User> users { get; }
     public IEnumerable<Stock> stocks { get; }
 
     public DatabaseContext()

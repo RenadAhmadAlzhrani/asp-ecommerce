@@ -10,7 +10,7 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
     [ApiController]
     [Route("api/[controller]")]
 
-    public class OrderItemController :ControllerBase
+    public class OrderItemController : CustomizedController
     {
 
 

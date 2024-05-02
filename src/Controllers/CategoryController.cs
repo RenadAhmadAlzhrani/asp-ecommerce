@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq; 
 
 using System.Threading.Tasks;
+using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities; 
 
@@ -15,11 +16,8 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 { 
 
-    [ApiController] 
 
-    [Route("api/[controller]")] 
-
-    public class CategoryController : ControllerBase 
+    public class CategoryController : CustomizedController 
 
     { 
 
