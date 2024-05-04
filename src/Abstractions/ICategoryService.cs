@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Entities;
 
-
 namespace CodeCrafters_backend_teamwork.src.Abstractions
 
 {
