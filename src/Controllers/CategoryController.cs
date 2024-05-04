@@ -1,80 +1,71 @@
-using System; 
-using System.Collections.Generic; 
 
-using System.Linq; 
-
-using System.Threading.Tasks;
+using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
-using CodeCrafters_backend_teamwork.src.Databases;
-using CodeCrafters_backend_teamwork.src.Entities; 
+using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.AspNetCore.Mvc;
 
-using Microsoft.AspNetCore.Mvc; 
 
+
+namespace CodeCrafters_backend_teamwork.src.Controller
+
+{
+
+
+    public class CategoryController : CustomizedController
+
+    {
+        private ICategoryService _categoryService;
+
+        public CategoryController(ICategoryService categoryService)
+
+        {
  
+            _categoryService = categoryService;
 
-namespace CodeCrafters_backend_teamwork.src.Controller 
-
-{ 
+        }
 
 
-    public class CategoryController : CustomizedController 
 
-    { 
+        [HttpGet]
+        public IEnumerable<Category> FindMany()
+        {
 
-        public IEnumerable<CategoryController> category; 
+            return _categoryService.FindMany();
 
- 
+        }
 
-        public CategoryController() 
+        [HttpGet("{categoryId}")]
+        public Category? FindOne(Guid categoryId)
+        {
 
-        { 
+            return _categoryService.FindOne(categoryId);
 
-            category = new DatabaseContext().Category; 
+        }
 
-        } 
 
- 
+        [HttpPost]
+        public IEnumerable<Category> CreateOne([FromBody] Category category)
 
-        [HttpGet] 
+        {
 
-        public IEnumerable<CategoryController> FindAll() 
+            return _categoryService.CreateOne(category);
 
-        { 
+        }
 
-            return category; 
 
-        } 
 
- 
+        [HttpDelete("{categoryId}")]
+        public IEnumerable<Category> DeleteCategory([FromRoute] Guid categoryId)
+        {
+            return _categoryService.DeleteCategory(categoryId);
+        }
 
-        [HttpGet("{productId}")] 
-
-        public CategoryController FindOne(CategoryController category) 
-
-        { 
-
-            return category; 
-
-        } 
-
- 
-
-        [HttpPost] 
-
-        public CategoryController CreateOne(CategoryController category) 
-
-        { 
-
-            return category; 
-
-        } 
-
- 
-
-        [HttpPatch("{id}")] 
-
-         
+        [HttpPatch("{categoryId}")]
+        public Category UpdateOne(Guid categoryId, Category updatedCategory)
+        {
+            return _categoryService.UpdateOne(categoryId, updatedCategory);
+        }
 
     }
 
-} 
+}
