@@ -14,38 +14,38 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
     {
         private IStockService _stockService;
 
-    public StockController(IStockService stockService)
-    {
-        _stockService = stockService;
-    }
+        public StockController(IStockService stockService)
+        {
+            _stockService = stockService;
+        }
 
-    [HttpGet]
-    public IEnumerable<Stock> FindMany()
-    {
-        return _stockService.FindMany();
-    }
-    [HttpGet("{stockId}")]
-    public Stock? FindOne(Guid stockId)
-    {
-        return _stockService.FindOne(stockId);
-    }
-    [HttpPost]
-    public IEnumerable<Stock> CreateOne([FromBody] Stock stock)
-    {
-        return _stockService.CreateOne(stock); 
+        [HttpGet]
+        public IEnumerable<Stock> FindMany()
+        {
+            return _stockService.FindMany();
+        }
+        [HttpGet("{stockId}")]
+        public Stock? FindOne(Guid stockId)
+        {
+            return _stockService.FindOne(stockId);
+        }
+        [HttpPost]
+        public IEnumerable<Stock> CreateOne([FromBody] Stock stock)
+        {
+            return _stockService.CreateOne(stock);
 
 
-    }
-    [HttpDelete("{stockId}")]
-    public IEnumerable<Stock>? DeleteProduct([FromRoute] Guid stockId)
-    {
-        return _stockService.DeleteProduct(stockId);
-    }
-    [HttpPatch("{stockId}")]
-    public Stock UpdateOne(Guid stockId, Stock updatedStock)
-    {
-        return _stockService.UpdateOne(stockId, updatedStock);
-    }
+        }
+        [HttpDelete("{stockId}")]
+        public IEnumerable<Stock>? DeleteProduct([FromRoute] Guid stockId)
+        {
+            return _stockService.DeleteProduct(stockId);
+        }
+        [HttpPatch("{stockId}")]
+        public Stock UpdateOne(Guid stockId, Stock updatedStock)
+        {
+            return _stockService.UpdateOne(stockId, updatedStock);
+        }
 
     }
 }

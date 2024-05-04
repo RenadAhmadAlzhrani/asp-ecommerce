@@ -1,7 +1,7 @@
-
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.Entities;
+
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -55,7 +55,7 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpDelete("{categoryId}")]
-        public IEnumerable<Category> DeleteCategory([FromRoute] Guid categoryId)
+        public IEnumerable<Category>? DeleteCategory([FromRoute] Guid categoryId)
         {
             return _categoryService.DeleteCategory(categoryId);
         }
@@ -65,7 +65,5 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         {
             return _categoryService.UpdateOne(categoryId, updatedCategory);
         }
-
     }
-
 }
