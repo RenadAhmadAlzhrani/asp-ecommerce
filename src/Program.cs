@@ -1,12 +1,8 @@
- Order_Checkout
-Order_Checkout
-
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Repositories;
 using CodeCrafters_backend_teamwork.src.Services;
 
 
- main
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Add services to the container.
@@ -27,10 +23,7 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 
 var app = builder.Build();
 app.MapControllers(); 
- Order_Checkout
 
-
- main
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -40,13 +33,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-=======
-using CodeCrafters_backend_teamwork.src.Abstractions;
-using CodeCrafters_backend_teamwork.src.Repositories;
-using CodeCrafters_backend_teamwork.src.Services;
 
 
-var builder = WebApplication.CreateBuilder(args);
+// var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Add services to the container.
@@ -69,7 +58,7 @@ builder.Services.AddScoped<IStockRepository, StockRepository>();
 //lowercase
 
 
-var app = builder.Build();
+// var app = builder.Build();
 app.MapControllers(); 
 
 // Configure the HTTP request pipeline.
@@ -81,5 +70,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
- main
+ 
 app.Run();
