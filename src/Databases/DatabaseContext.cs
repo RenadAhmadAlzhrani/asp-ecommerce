@@ -4,22 +4,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Controllers;
-
 using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Databases;
 public class DatabaseContext
 {
+    public IEnumerable<Category> category { get; }
     public IEnumerable<Product> products { get; }
     public IEnumerable<User> users { get; }
     public IEnumerable<Stock> stocks { get; }
 
     public DatabaseContext()
     {
+        category =
+        [
+            new Category("Channel"),
+            new Category("miu miu"),
+            new Category("Gucci")
+        ];
         products = [
             new Product("bag", "pic1", 44.5),
-             new Product("purse", "pic2", 44.5),
-             new Product("shirt", "pic3", 44.5)
+            new Product("purse", "pic2", 44.5),
+            new Product("shirt", "pic3", 44.5)
              ];
 
         stocks = [
