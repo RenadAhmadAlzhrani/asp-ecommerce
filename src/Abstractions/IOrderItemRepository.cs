@@ -15,6 +15,7 @@ public IEnumerable<OrderItem> FindMany();
 public OrderItem? FindOne(Guid id);
 public OrderItem CreateOne(OrderItem orderItem);
 public OrderItem UpdateOne(OrderItem updatedOrderItem);
+public OrderItem DeleteAll(string id);
 
  
  }

@@ -20,7 +20,6 @@ namespace CodeCrafters_backend_teamwork.src.Entities
         StockId = stockId;
         Quantity = quantity;
 
-    }
+}
+}}
 
-}
-}
