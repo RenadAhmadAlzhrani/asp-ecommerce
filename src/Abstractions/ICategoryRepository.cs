@@ -1,5 +1,25 @@
-// using System; 
-// using System.Collections.Generic; 
+ 
+updateCategoryFeature
+using CodeCrafters_backend_teamwork.src.Entities; 
+
+namespace CodeCrafters_backend_teamwork.src.Abstractions 
+
+{ 
+    public interface ICategoryRepository 
+    { 
+        public Category? FindOne(Guid categoryId); 
+
+        public IEnumerable<Category> FindMany(); 
+
+        public IEnumerable<Category> CreateOne(Category newCategory); 
+
+        public Category UpdateOne( Guid categoryId,Category updatedCategory); 
+
+        public IEnumerable<Category>? DeleteCategory(Guid categoryId);
+    
+using System; 
+using System.Collections.Generic; 
+
 
 // using System.Linq; 
 
@@ -25,8 +45,11 @@
 
 //         public Category UpdateOne (Category newCategory); 
 
-//         public Category DeleteOne (Guid Id); 
 
-//     } 
+
+        public Category DeleteOne (Guid Id); 
+main
+    } 
+
 
 // } 
