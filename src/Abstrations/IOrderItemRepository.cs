@@ -9,11 +9,12 @@ namespace CodeCrafters_backend_teamwork.src.Service;
  
  public interface IOrderItemRepository
  {
-public List<OrderItem>FindAll(OrderItem orderItem);
-public OrderItem FindOne(OrderItem orderItem);
+
+
+public IEnumerable<OrderItem> FindMany();
+public OrderItem? FindOne(Guid id);
 public OrderItem CreateOne(OrderItem orderItem);
-public OrderItem UpdateOne(OrderItem orderItem);
-public OrderItem DeleteAll(string id);
+public OrderItem UpdateOne(OrderItem updatedOrderItem);
 
  
  }

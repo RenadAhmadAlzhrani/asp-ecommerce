@@ -10,16 +10,17 @@ namespace CodeCrafters_backend_teamwork.src.Entities
     public string Id { get; set; } 
     public string OrderCheckoutId { get; set; } 
     public string StockId { get; set; } 
-    public int Quantity { get; set; } 
-    public OrderItem(string orderCheckoutId, string stockId, int quantity)
+    public int Quantity { get; set; }
+
+
+    public OrderItem(Guid id, int orderCheckoutId, int stockId, int quantity)
     {
-        Id = Guid.NewGuid().ToString();
+        Id = id;
         OrderCheckoutId = orderCheckoutId;
         StockId = stockId;
         Quantity = quantity;
 
     }
-
 
 }
 }

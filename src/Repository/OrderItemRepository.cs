@@ -10,43 +10,63 @@ namespace CodeCrafters_backend_teamwork.src.Repository
 {
    public class OrderItemRepository : IOrderItemRepository
     {
-        IEnumerable<OrderItem> orderitem;
 
-        public OrderItemRepository()
-        {
-            orderitem = new DatabaseContext().OrderItem;
+    private IEnumerable<OrderItem> _orderItems { get; set; }
 
-        }
-        public IEnumerable<OrderItem> FindAll()
-        {
-            return orderitem;
-        }
-        public OrderItem FindOne(OrderItem orderitem)
-        {
-            return orderitem;
-        }
-        public OrderItem CreateOne(OrderItem orderitem)
-        {
-            return orderitem;
-        }
-        public OrderItem UpdateOne(OrderItem orderitem)
-        {
-            return orderitem;
-        }
-        public IEnumerable<OrderItem> DeleteAll(string id)
+    public OrderItemRepository()
     {
-        orderitem.Where(orderitem => orderitem.Id == id);
-        return orderitem;
+        _orderItems = new DatabaseContext().OrderItems;
     }
 
-        public List<OrderItem> FindAll(OrderItem orderItem)
+    public IEnumerable<OrderItem> FindMany()
+    {
+        return _orderItems;
+    }
+    public OrderItem? FindOne(Guid id)
+    {
+        OrderItem? orderItem = _orderItems.FirstOrDefault(orderItem => orderItem.Id == id);
+        if (orderItem is not null)
         {
-            throw new NotImplementedException();
+            return orderItem;
         }
 
-        OrderItem IOrderItemRepository.DeleteAll(string id)
+        else return null;
+    }
+
+    public OrderItem CreateOne(OrderItem orderItem)
+    {
+        _orderItems.Append(orderItem);
+        return orderItem;
+    }
+
+    public OrderItem UpdateOne(OrderItem updatedOrderItem)
+    {
+        var orderItems = _orderItems.Select(orderItem =>
         {
-            throw new NotImplementedException();
-        }
-    } }
-    
+            if (orderItem.Id == updatedOrderItem.Id)
+
+            {
+                return updatedOrderItem;
+            }
+            return orderItem;
+        });
+        _orderItems = orderItems;
+        return updatedOrderItem;
+
+
+    }
+
+    public bool DeleteOne(Guid id)
+    {
+        OrderItem? orderItem = FindOne(id);
+        if (orderItem is null) return false;
+
+        var orderItems = _orderItems.Where(orderItem => orderItem.Id != id);
+        _orderItems = orderItems;
+        return true;
+
+    }
+
+
+
+}}
