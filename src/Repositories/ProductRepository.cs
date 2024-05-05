@@ -14,7 +14,7 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository()
     {
-        _products = new DatabaseContext().products;
+        _products = new DatabaseContext().Products;
 
     }
     public IEnumerable<Product> FindMany()

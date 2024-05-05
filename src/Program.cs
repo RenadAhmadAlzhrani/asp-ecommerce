@@ -1,4 +1,5 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Repositories;
 using CodeCrafters_backend_teamwork.src.Services;
 
@@ -6,7 +7,8 @@ using CodeCrafters_backend_teamwork.src.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
-// Add services to the container.
+// builder.Services.AddDbContext<DatabaseContext>();
+
 // Learn more about configuring Swagger/OpenAPI att https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,11 +25,11 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 
-//lowercase
+
 
 
 var app = builder.Build();
-app.MapControllers(); 
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

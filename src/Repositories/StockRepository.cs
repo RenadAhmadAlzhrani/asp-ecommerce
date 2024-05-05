@@ -14,7 +14,7 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
 
         public StockRepository()
         {
-            _stocks = new DatabaseContext().stocks;
+            _stocks = new DatabaseContext().Stocks;
 
         }
         public IEnumerable<Stock> FindMany()

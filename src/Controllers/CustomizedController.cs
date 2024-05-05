@@ -11,5 +11,4 @@ namespace CodeCrafters_backend_teamwork.src.Controllers;
 [Route("api/v1/[controller]s")]
 public abstract class CustomizedController : ControllerBase
 {
-
 }

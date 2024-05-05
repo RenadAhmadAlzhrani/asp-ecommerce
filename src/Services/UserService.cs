@@ -29,24 +29,45 @@ public class UserService : IUserService
         return usersRead.ToList();
     }
 
+    public UserReadDto? SignIn(UserSignIn userSign)
+    {
+        User? user = _userRepository.FindOneByEmail(userSign.Email);
+        if (user is null)
+        {
+            return null;
+        }
+        byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
 
-    public User? CreateOne(User user)
+        bool isCorrectPass = PasswordUtils.VerifyPassword(userSign.Password, user.Password, pepper);
+        if (!isCorrectPass) return null;
+
+        UserReadDto userRead = _mapper.Map<UserReadDto>(user);
+        return userRead;
+
+
+    }
+
+    public UserReadDto? SignUp(UserCreateDto user)
     {
         var foundUser = _userRepository.FindOneByEmail(user.Email);
-        Console.WriteLine($"Create One method triggers");
 
         if (foundUser is not null)
         {
             Console.WriteLine($"item is found");
             return null;
         }
+
         byte[] pepper = Encoding.UTF8.GetBytes(_config["Jwt:Pepper"]!);
 
         PasswordUtils.HashPassword(user.Password, out string hashedPassword,
         pepper);
-        
+
         user.Password = hashedPassword;
-        return _userRepository.CreateOne(user);
+        User mappedUser = _mapper.Map<User>(user);
+        User newUser = _userRepository.CreateOne(mappedUser);
+        UserReadDto userRead = _mapper.Map<UserReadDto>(newUser);
+
+        return userRead;
     }
 
     public UserReadDto? FindOneByEmail(string email)
@@ -68,5 +89,28 @@ public class UserService : IUserService
         return null;
     }
 
+    public bool DeleteOne(Guid id)
+    {
+        return _userRepository.DeleteOne(id);
+    }
 
+    // User? IUserService.CreateOne(User user)
+    // {
+    //     throw new NotImplementedException();
+    // }
+
+    // UserReadDto IUserService.DeleteOne(User userId)
+    // {
+    //     throw new NotImplementedException();
+    // }
+
+    public User FindOne(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
+
+    UserReadDto IUserService.FindOne(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }
