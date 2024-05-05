@@ -1,5 +1,6 @@
 
 using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Repositories;
 using CodeCrafters_backend_teamwork.src.Services;
 
@@ -10,10 +11,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI att https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DatabaseContext>();
+
 
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-
+// dependency inject
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -23,6 +26,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
+
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

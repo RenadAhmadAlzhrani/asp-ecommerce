@@ -33,8 +33,8 @@ public class ProductController : CustomizedController
     {
         return _productService.CreateOne(product);
 
-
     }
+    
     [HttpDelete("{productId}")]
     public IEnumerable<Product>? DeleteProduct([FromRoute] Guid productId)
     {

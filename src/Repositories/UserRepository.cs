@@ -1,15 +1,19 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Repositories;
 
 public class UserRepository : IUserRepository
 {
-     private IEnumerable<User> _users;
-     public UserRepository()
+     private DbSet<User> _users;
+     private DatabaseContext _databaseContext;
+     public UserRepository(DatabaseContext databaseContext)
      {
-          _users = new DatabaseContext().users;
+          _databaseContext = databaseContext;
+
+          _users = databaseContext.Users;
      }
 
      public IEnumerable<User> FindMany()
@@ -18,7 +22,8 @@ public class UserRepository : IUserRepository
      }
      public User CreateOne(User user)
      {
-         _users = _users.Append(user);
+          _users.Add(user);
+          _databaseContext.SaveChanges();
           return user;
      }
 
@@ -30,17 +35,8 @@ public class UserRepository : IUserRepository
 
      public User UpdateOne(User updatedUser)
      {
-          var users = _users.Select(user =>
-           {
-                if (user.Email == updatedUser.Email)
-                {
-                     return updatedUser;
-
-                }
-                return user;
-           });
-
-          _users = users.ToList();
+          _users.Update(updatedUser);
+          _databaseContext.SaveChanges();
           return updatedUser;
 
      }

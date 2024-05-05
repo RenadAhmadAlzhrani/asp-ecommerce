@@ -10,6 +10,7 @@ namespace CodeCrafters_backend_teamwork.src.Mappers
         {
             CreateMap<User, UserReadDto>();
             CreateMap<UserReadDto, User>();
+            CreateMap<UserCreateDto, User>();
         }
     }
 }
