@@ -11,6 +11,8 @@ public class DatabaseContext : DbContext
     public DbSet<Product> Products { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Stock> Stocks { get; set; }
+    public DbSet<OrderItem> OrderItems { get; set; }
+
     private IConfiguration _config;
     public IEnumerable<OrderCheckout> orderCheckouts { get; }
     public DbSet<Category> Category { get; set; }
