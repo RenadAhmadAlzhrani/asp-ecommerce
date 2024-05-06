@@ -13,16 +13,9 @@ public class DatabaseContext : DbContext
     public DbSet<Stock> Stocks { get; set; }
     private IConfiguration _config;
     public IEnumerable<OrderCheckout> orderCheckouts { get; }
-    public IEnumerable<Category> category { get; }
+    public DbSet<Category> Category { get; set; }
     public DatabaseContext()
     {
-        category =
-        [
-            new Category("Channel"),
-            new Category("miu miu"),
-            new Category("Gucci")
-        ];
-
 
         orderCheckouts =
         [
@@ -34,11 +27,11 @@ public class DatabaseContext : DbContext
     {
         _config = config;
     }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(@$"Host=localhost;Username=postgres;Database=ecommerce;Password=235552")
-        .UseSnakeCaseNamingConvention();
+    {
 
-
+        optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Database={_config["Db:Database"]};Password={_config["Db:Password"]}")
+       .UseSnakeCaseNamingConvention();
+    }
 
 }

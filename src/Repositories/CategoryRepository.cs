@@ -11,10 +11,12 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private IEnumerable<Category> _categories = [];
+        private DatabaseContext _databaseContext;
 
-        public CategoryRepository()
+        public CategoryRepository(DatabaseContext databaseContext)
         {
-            _categories = new DatabaseContext().category;
+            _databaseContext = databaseContext;
+            _categories = databaseContext.Category;
         }
 
         public IEnumerable<Category> CreateOne(Category newCategory)
@@ -23,7 +25,7 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
             return _categories;
         }
 
-         public Category? FindOne(Guid categoryId) //doesn't work
+        public Category? FindOne(Guid categoryId) //doesn't work
         {
             return _categories.FirstOrDefault((category) => category.Id == categoryId);
         }
@@ -33,12 +35,12 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
             return _categories;
         }
 
-        public IEnumerable<Category>? DeleteCategory(Guid categoryId) 
+        public IEnumerable<Category>? DeleteCategory(Guid categoryId)
         {
 
             _categories.Where((c) => c.Id != categoryId);
             return _categories;
-                
+
         }
 
 
@@ -54,6 +56,6 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
 
             return updatedCategory;
 
-        }    
-  }
+        }
+    }
 }
