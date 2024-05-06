@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,9 @@ public class ProductController : CustomizedController
     }
 
     [HttpGet]
-    public IEnumerable<Product> FindMany()
+    public ActionResult<IEnumerable<ProductReadDto>> FindMany()
     {
-        return _productService.FindMany();
+        return Ok (_productService.FindMany());
     }
     [HttpGet("{productId}")]
     public Product? FindOne(Guid productId)
@@ -29,12 +30,12 @@ public class ProductController : CustomizedController
         return _productService.FindOne(productId);
     }
     [HttpPost]
-    public IEnumerable<Product> CreateOne([FromBody] Product product)
+    public ActionResult<IEnumerable<ProductReadDto>> CreateOne([FromBody] ProductCreateDto product)
     {
-        return _productService.CreateOne(product);
-
+        return CreatedAtAction(nameof(CreateOne), _productService.CreateOne(product));
 
     }
+    
     [HttpDelete("{productId}")]
     public IEnumerable<Product>? DeleteProduct([FromRoute] Guid productId)
     {
