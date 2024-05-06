@@ -23,7 +23,7 @@ namespace CodeCrafters_backend_teamwork.src.Entities
         public Category(string name) 
 
         { 
-
+            Id = Guid.NewGuid();
             Name = name; 
 
         } 
