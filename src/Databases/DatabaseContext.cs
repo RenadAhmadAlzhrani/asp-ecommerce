@@ -34,11 +34,11 @@ public class DatabaseContext : DbContext
     {
         _config = config;
     }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseNpgsql(@$"Host=localhost;Username=postgres;Database=ecommerce;Password=235552")
-        .UseSnakeCaseNamingConvention();
+    {
 
-
+        optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Database={_config["Db:Database"]};Password={_config["Db:Password"]}")
+       .UseSnakeCaseNamingConvention();
+    }
 
 }
