@@ -1,53 +1,75 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using CodeCrafters_backend_teamwork.src.Controllers;
-// using CodeCrafters_backend_teamwork.src.Databases;
-// using CodeCrafters_backend_teamwork.src.Entities;
-// using CodeCrafters_backend_teamwork.src.Service;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CodeCrafters_backend_teamwork.src.Controllers;
+using CodeCrafters_backend_teamwork.src.Databases;
+using CodeCrafters_backend_teamwork.src.Entities;
+using CodeCrafters_backend_teamwork.src.Service;
+using Microsoft.EntityFrameworkCore.Storage;
 
-// namespace CodeCrafters_backend_teamwork.src.Repository
-// {
-//    public class OrderItemRepository : IOrderItemRepository
-//     {
-//         IEnumerable<OrderItem> Orderitem;
+namespace CodeCrafters_backend_teamwork.src.Repository
+{
+    public class OrderItemRepository : IOrderItemRepository
+    {
 
-//         public OrderItemRepository()
-//         {
-//             orderitem = new DatabaseContext().OrderItem;
+        private IEnumerable<OrderItem> _orderItems { get; set; }
+        private DatabaseContext _databaseContext;
 
-//         }
-//         public IEnumerable<OrderItem> FindAll()
-//         {
-//             return orderitem;
-//         }
-//         public OrderItem FindOne(OrderItem orderitem)
-//         {
-//             return orderitem;
-//         }
-//         public OrderItem CreateOne(OrderItem orderitem)
-//         {
-//             return orderitem;
-//         }
-//         public OrderItem UpdateOne(OrderItem orderitem)
-//         {
-//             return orderitem;
-//         }
-//         public IEnumerable<OrderItem> DeleteAll(string id)
-//     {
-//         orderitem.Where(orderitem => orderitem.Id == id);
-//         return orderitem;
-//     }
+        public OrderItemRepository(DatabaseContext databaseContext)
+        {
+            _databaseContext = databaseContext;
+            _orderItems = databaseContext.OrderItems;
+        }
 
-//         public List<OrderItem> FindAll(OrderItem orderItem)
-//         {
-//             throw new NotImplementedException();
-//         }
+        public IEnumerable<OrderItem> FindMany()
+        {
+            return _orderItems;
+        }
+        public OrderItem? FindOne(Guid id)
+        {
+            OrderItem? orderItem = _orderItems.FirstOrDefault(orderItem => orderItem.Id == id);
+            if (orderItem is not null)
+            {
+                return orderItem;
+            }
 
-//         OrderItem IOrderItemRepository.DeleteAll(string id)
-//         {
-//             throw new NotImplementedException();
-//         }
-//     } }
-//     // rnd
+            else return null;
+        }
+
+        public OrderItem CreateOne(OrderItem orderItem)
+        {
+            _orderItems.Append(orderItem);
+            return orderItem;
+        }
+
+        public OrderItem UpdateOne(OrderItem updatedOrderItem)
+        {
+            var orderItems = _orderItems.Select(orderItem =>
+            {
+                if (orderItem.Id == updatedOrderItem.Id)
+
+                {
+                    return updatedOrderItem;
+                }
+                return orderItem;
+            });
+            _orderItems = orderItems;
+            return updatedOrderItem;
+
+
+        }
+
+        public bool DeleteOne(Guid id)
+        {
+            OrderItem? orderItem = FindOne(id);
+            if (orderItem is null) return false;
+
+            var orderItems = _orderItems.Where(orderItem => orderItem.Id != id);
+            _orderItems = orderItems;
+            return true;
+
+        }
+
+    }
+}

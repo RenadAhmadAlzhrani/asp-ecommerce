@@ -35,7 +35,7 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
             return orderitem;
         }
         [HttpDelete]
-        public IEnumerable<OrderItem> DeleteAll(string id)
+        public IEnumerable<OrderItem> DeleteAll(Guid id)
         {
             orderitem.Where(orderitem => orderitem.Id == id);
             return orderitem;
