@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Services
@@ -10,20 +8,25 @@ namespace CodeCrafters_backend_teamwork.src.Services
     public class CategoryService : ICategoryService
     {
         private ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(ICategoryRepository categoryRepository , IMapper mapper)
         {
             _categoryRepository = categoryRepository;
+            _mapper= mapper;
         }
 
-        public IEnumerable<Category> CreateOne(Category newCategory)
+        public CategoryReadDto CreateOne(CategoryCreateDto newCategory)
         {
-            return _categoryRepository.CreateOne(newCategory);
+            Category category = _mapper.Map<Category>(newCategory);
+            _categoryRepository.CreateOne(category);
+            return _mapper.Map<CategoryReadDto>(category);
         } 
 
-        public IEnumerable<Category> FindMany()
+        public IEnumerable<CategoryReadDto> FindMany()
         {
-            return _categoryRepository.FindMany();
+            IEnumerable<Category> categories = _categoryRepository.FindMany();
+            return categories.Select(_mapper.Map<CategoryReadDto>);
         }
 
 

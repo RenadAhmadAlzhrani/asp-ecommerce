@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private IEnumerable<Category> _categories = [];
+        private DbSet<Category> _categories;
         private DatabaseContext _databaseContext;
 
         public CategoryRepository(DatabaseContext databaseContext)
@@ -21,7 +18,8 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
 
         public IEnumerable<Category> CreateOne(Category newCategory)
         {
-            _categories = _categories.Append(newCategory);
+            _categories.Add(newCategory);
+            _databaseContext.SaveChanges();
             return _categories;
         }
 
@@ -39,6 +37,8 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
         {
 
             _categories.Where((c) => c.Id != categoryId);
+            _databaseContext.SaveChanges();
+
             return _categories;
 
         }
@@ -51,6 +51,8 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
             if (category != null)
             {
                 category.Id = updatedCategory.Id;
+                _databaseContext.SaveChanges();
+
                 return category;
             }
 

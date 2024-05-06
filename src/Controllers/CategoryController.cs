@@ -1,5 +1,6 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 using Microsoft.AspNetCore.Mvc;
@@ -25,10 +26,10 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpGet]
-        public IEnumerable<Category> FindMany()
+        public ActionResult<IEnumerable<CategoryReadDto>> FindMany()
         {
 
-            return _categoryService.FindMany();
+            return Ok(_categoryService.FindMany());
 
         }
 
@@ -42,11 +43,11 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpPost]
-        public IEnumerable<Category> CreateOne([FromBody] Category category)
+        public ActionResult<IEnumerable<CategoryReadDto>> CreateOne([FromBody] CategoryCreateDto newCategory)
 
         {
 
-            return _categoryService.CreateOne(category);
+            return CreatedAtAction(nameof(CreateOne),_categoryService.CreateOne(newCategory));
 
         }
 
@@ -63,5 +64,6 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         {
             return _categoryService.UpdateOne(categoryId, updatedCategory);
         }
+  
     }
 }
