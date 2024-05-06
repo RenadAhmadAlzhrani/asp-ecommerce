@@ -19,27 +19,10 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
         {
             _stockService = stockService;
         }
-
-<<<<<<< HEAD
-    [HttpGet]
-    public ActionResult<IEnumerable<StockReadDto>> FindMany()
-    {
-        return Ok(_stockService.FindMany()); 
-    }
-    [HttpGet("{stockId}")]
-    public Stock? FindOne(Guid stockId)
-    {
-        return _stockService.FindOne(stockId);
-    }
-    [HttpPost]
-    public ActionResult<IEnumerable<StockReadDto>> CreateOne([FromBody] StockCreateDto stock)
-    {
-         return CreatedAtAction(nameof(CreateOne), _stockService.CreateOne(stock));
-=======
         [HttpGet]
-        public IEnumerable<Stock> FindMany()
+        public ActionResult<IEnumerable<StockReadDto>> FindMany()
         {
-            return _stockService.FindMany();
+            return Ok(_stockService.FindMany());
         }
         [HttpGet("{stockId}")]
         public Stock? FindOne(Guid stockId)
@@ -47,11 +30,9 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
             return _stockService.FindOne(stockId);
         }
         [HttpPost]
-        public IEnumerable<Stock> CreateOne([FromBody] Stock stock)
+        public ActionResult<IEnumerable<StockReadDto>> CreateOne([FromBody] StockCreateDto stock)
         {
-            return _stockService.CreateOne(stock);
-
->>>>>>> 61296e5ffc08296af5b9446c631786021925628c
+            return CreatedAtAction(nameof(CreateOne), _stockService.CreateOne(stock));
 
         }
         [HttpDelete("{stockId}")]
