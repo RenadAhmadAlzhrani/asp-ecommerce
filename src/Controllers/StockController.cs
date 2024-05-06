@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,9 +21,9 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
     }
 
     [HttpGet]
-    public IEnumerable<Stock> FindMany()
+    public ActionResult<IEnumerable<StockReadDto>> FindMany()
     {
-        return _stockService.FindMany();
+        return Ok(_stockService.FindMany()); 
     }
     [HttpGet("{stockId}")]
     public Stock? FindOne(Guid stockId)
@@ -30,10 +31,9 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
         return _stockService.FindOne(stockId);
     }
     [HttpPost]
-    public IEnumerable<Stock> CreateOne([FromBody] Stock stock)
+    public ActionResult<IEnumerable<StockReadDto>> CreateOne([FromBody] StockCreateDto stock)
     {
-        return _stockService.CreateOne(stock); 
-
+         return CreatedAtAction(nameof(CreateOne), _stockService.CreateOne(stock));
 
     }
     [HttpDelete("{stockId}")]
