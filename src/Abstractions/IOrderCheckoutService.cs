@@ -8,10 +8,10 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
 {
     public interface IOrderCheckoutService
     {
-        public IEnumerable<OrderCheckout> FindAll(Guid usersId);
-        public OrderCheckout FindOne(Guid id);
-        public OrderCheckout CreateOne(OrderCheckout newOrderCheckout);
-        public OrderCheckout UpdateOne(Guid ordercheckoutId, OrderCheckout updateordercheckout);
-        public OrderCheckout DeleteOne(Guid id);
+        public IEnumerable<OrderCheckout> FindMany();
+        public OrderCheckout? FindOne(Guid orderCheckoutId);
+        public IEnumerable<OrderCheckout> CreateOne(OrderCheckout newOrderCheckout);
+        public OrderCheckout UpdateOne(Guid ordercheckoutId, OrderCheckout updateOrdercheckout);
+        public IEnumerable<OrderCheckout>? DeleteOne(Guid orderCheckoutId);
     }
 }

@@ -9,21 +9,51 @@ using CodeCrafters_backend_teamwork.src.Entities;
 namespace CodeCrafters_backend_teamwork.src.Reository
 {
     public class OrderCheckoutRepo : IOrderCheckoutRepository
-    {
-        private IEnumerable<OrderCheckout> _orderCheckout;
-        public IEnumerable<OrderCheckout> CreateOne()
+   {
+        private IEnumerable<OrderCheckout> _checkouts = [];
+
+        public OrderCheckoutRepo()
         {
-            _orderCheckout = new DatabaseContext().orderCheckout;  //i need to contain
+            _checkouts = new DatabaseContext().orderCheckouts;
+        }
+
+        public IEnumerable<OrderCheckout> CreateOne(OrderCheckout newOrderCheckout)
+        {
+           _checkouts =_checkouts.Append(newOrderCheckout);
+            return _checkouts;
+        }
+
+         public OrderCheckout? FindOne(Guid orderCheckoutId)
+        {
+            return _checkouts.FirstOrDefault((orderCheckout) => orderCheckout.Id == orderCheckoutId);
         }
 
         public IEnumerable<OrderCheckout> FindMany()
         {
-            return _orderCheckout;
+            return _checkouts;
         }
 
-        public OrderCheckout FindOne(Guid orderCheckoutId)
+        public IEnumerable<OrderCheckout>? DeleteOne(Guid orderCheckoutId) 
         {
-            OrderCheckout orderCheckout = _orderCheckout.FirstOrDefault(orderCheckout => orderCheckout.Id ==orderCheckoutId);
+
+           _checkouts.Where((o) => o.Id != orderCheckoutId);
+            return _checkouts;
+
         }
-    }
+
+
+        public OrderCheckout UpdateOne(Guid orderCheckoutId, OrderCheckout updatedCheckout)
+        {
+
+            OrderCheckout? orderCheckout =_checkouts.FirstOrDefault(orderCheckout => orderCheckout.Id == orderCheckoutId);
+            if (orderCheckout != null)
+            {
+                orderCheckout.Id = updatedCheckout.Id;
+                return orderCheckout;
+            }
+
+            return updatedCheckout;
+
+        }    
+  }
 }

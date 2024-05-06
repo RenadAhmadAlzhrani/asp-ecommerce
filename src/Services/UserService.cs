@@ -29,11 +29,11 @@ public class UserService : IUserService
         return usersRead.ToList();
     }
 
-
     public User? CreateOne(User user) // DOES NOT WROK SHOULD FIX IT 
     {
         var foundUser = _userRepository.FindOneByEmail(user.Email);
         Console.WriteLine($"Create One method triggers");
+
 
         if (foundUser is not null)
         {
@@ -80,8 +80,8 @@ public class UserService : IUserService
             return null;
         }
 
-
         var userCreated = _userRepository.CreateOne(mappedUser);
         return _mapper.Map<UserReadDto>(userCreated);
     }
 }
+

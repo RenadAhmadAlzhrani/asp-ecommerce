@@ -8,82 +8,38 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeCrafters_backend_teamwork.src.Controllers
 {
-
-    public class OrderItemController : CustomizeeController
-
+    public class OrderItemController : CustomizedController
     {
 
 
         IEnumerable<OrderItem> orderitem;
-
-
-
-
         [HttpGet]
         public IEnumerable<OrderItem> FindMany()
         {
             return orderitem;
         }
         [HttpGet("{OrderItemId}")]
-        public ActionResult<OrderItemReadDto> FindOne(string id)
+        public OrderItem FindOne(OrderItem orderitem)
         {
-            return Ok(_orderItemService.FindOne(id));
+            return orderitem;
         }
-
         [HttpPost]
+        public OrderItem CreateOne(OrderItem orderitem)
 
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<OrderItemReadDto> CreateOne([FromBody] OrderItemReadDto orderItem)
         {
-
-
-            if (orderItem is not null)
-            {
-                var createdOrderItem = _orderItemService.CreateOne(orderItem);
-                return CreatedAtAction(nameof(CreateOne), createdOrderItem);
-            }
-            return BadRequest();
+            return orderitem;
         }
-
-        [HttpPatch("{OrderItemId}")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<OrderItemReadDto> UpdateOne(string id, [FromBody] OrderItem orderitem)
+        [HttpPatch]
+        public OrderItem UpdateOne(OrderItem orderitem)
+        {
+            return orderitem;
+        }
+        [HttpDelete]
+        public IEnumerable<OrderItem> DeleteAll(string id)
         {
             orderitem.Where(orderitem => orderitem.Id == id);
             return orderitem;
         }
 
-
-
-        OrderItemReadDto? updatedOrderItem = _orderItemService.UpdateOne(id, orderitem);
-        if (updatedOrderItem is not null)
-        {
-            return CreatedAtAction(nameof(UpdateOne), updatedOrderItem);
     }
-        else return BadRequest();
 }
-
-[HttpDelete("{OrderItemId}")]
-[ProducesResponseType(StatusCodes.Status204NoContent)]
-[ProducesResponseType(StatusCodes.Status404NotFound)]
-public ActionResult DeleteOne(string id)
-{
-    bool isDeleted = _orderItemService.DeleteOne(id);
-    if (!isDeleted)
-    {
-        return NotFound();
-    }
-    return NoContent();
-
-}
-        }    
-    
-
-
-
-
-
-
-
