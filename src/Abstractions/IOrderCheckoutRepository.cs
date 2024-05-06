@@ -8,8 +8,8 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
 {
     public interface IOrderCheckoutRepository
     {
-        public IEnumerable<OrderCheckout> FindALL(Guid userId);
+        public IEnumerable<OrderCheckout> FindMany(Guid userId);
         public OrderCheckout FindOne(Guid id);
-        public OrderCheckout CreateOne(OrderCheckout newOrder);
+        public OrderCheckout CreateOne(OrderCheckout newOrdercheckout);
     }
 }
