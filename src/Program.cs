@@ -23,22 +23,6 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IStockService, StockService>();
 builder.Services.AddScoped<IStockRepository, StockRepository>();
 
-builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true); //lowercase
-
-
-var app = builder.Build();
-app.MapControllers(); 
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-
 
 // var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -53,34 +37,22 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
-// dependency inject
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-
-
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IStockService, StockService>();
-builder.Services.AddScoped<IStockRepository, StockRepository>();
 
 var app = builder.Build();
-
-//lowercase
-
-
-
-// var app = builder.Build();
-app.MapControllers(); 
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
-             CreateMap<CategoryReadDto, Category>();
-            CreateMap<Category, CategoryReadDto>();
-            CreateMap<CategoryUpdateDto, Category>();
-            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
-            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
+app.MapControllers();
+
+app.UseHttpsRedirection();
+
 app.Run();

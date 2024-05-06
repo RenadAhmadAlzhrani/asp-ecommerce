@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CodeCrafters_backend_teamwork.src.Controller
 
 {
-
-
     public class CategoryController : CustomizedController
 
     {

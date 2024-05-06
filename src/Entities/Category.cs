@@ -1,16 +1,14 @@
-namespace CodeCrafters_backend_teamwork.src.DTOs
+namespace CodeCrafters_backend_teamwork.src.Entities
 {
-    public class CategoryReadDto
+    public class Category
     {
-        public Guid Id { get;  set;}
-        public string Name {get; set;} 
-    }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
 
-
-
-    public class CategoryUpdateDto
-    {
-        public Guid Id { get;  set;}
-        public string Name {get; set;} 
+        public Category(string name)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+        }
     }
 }
