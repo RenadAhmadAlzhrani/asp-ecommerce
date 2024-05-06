@@ -1,3 +1,4 @@
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Abstractions
@@ -5,10 +6,10 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
 
     public interface ICategoryService
     {
-        public IEnumerable<Category> FindMany();
-        public Category? FindOne(Guid id);
+        public IEnumerable<CategoryReadDto> FindMany();
+        public Category? FindOne(Guid categoryId);
 
-        public IEnumerable<Category> CreateOne(Category newCategory);
+        public CategoryReadDto CreateOne(CategoryCreateDto newCategory);
 
         public Category UpdateOne(Guid categoryId, Category updatedCategory);
 

@@ -13,4 +13,10 @@ namespace CodeCrafters_backend_teamwork.src.DTOs
         public Guid Id { get;  set;}
         public string Name {get; set;} 
     }
+
+    public class CategoryCreateDto
+    {
+        public Guid Id { get;  set;}
+        public string Name {get; set;} 
+    }
 }
