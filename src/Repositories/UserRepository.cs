@@ -1,48 +1,46 @@
-// using CodeCrafters_backend_teamwork.src.Abstractions;
-// using CodeCrafters_backend_teamwork.src.Databases;
-// using CodeCrafters_backend_teamwork.src.Entities;
 
-// namespace CodeCrafters_backend_teamwork.src.Repositories;
+using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.Databases;
+using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
-// public class UserRepository : IUserRepository
-// {
-//      private IEnumerable<User> _users;
-//      public UserRepository()
-//      {
-//           _users = new DatabaseContext().users;
-//      }
+namespace CodeCrafters_backend_teamwork.src.Repositories;
 
-//      public IEnumerable<User> FindMany()
-//      {
-//           return _users;
-//      }
-//      public User CreateOne(User user)
-//      {
-//          _users = _users.Append(user);
-//           return user;
-//      }
+public class UserRepository : IUserRepository
+{
+     private DbSet<User> _users;
+     private DatabaseContext _databaseContext;
+     public UserRepository(DatabaseContext databaseContext)
+     {
+          _databaseContext = databaseContext;
 
-//      public User? FindOneByEmail(string email)
-//      {
-//           User? user = _users.FirstOrDefault(user => user.Email == email);
-//           return user;
-//      }
+          _users = databaseContext.Users;
+     }
 
-//      public User UpdateOne(User updatedUser)
-//      {
-//           var users = _users.Select(user =>
-//            {
-//                 if (user.Email == updatedUser.Email)
-//                 {
-//                      return updatedUser;
+     public IEnumerable<User> FindMany()
+     {
+          return _users;
+     }
+     public User CreateOne(User user)
+     {
+          _users.Add(user);
+          _databaseContext.SaveChanges();
+          return user;
+     }
 
-//                 }
-//                 return user;
-//            });
+     public User? FindOneByEmail(string email)
+     {
+          User? user = _users.FirstOrDefault(user => user.Email == email);
+          return user;
+     }
 
-//           _users = users.ToList();
-//           return updatedUser;
+     public User UpdateOne(User updatedUser)
+     {
+          _users.Update(updatedUser);
+          _databaseContext.SaveChanges();
+          return updatedUser;
 
-//      }
+     }
 
-// }
+}
+

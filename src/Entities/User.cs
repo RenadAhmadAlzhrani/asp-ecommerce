@@ -1,5 +1,6 @@
 // namespace CodeCrafters_backend_teamwork.src.Entities;
 
+
 // public class User(int id, string firstName, string lastName, string password, string email, int phoneNumber)
 // {
 //     public string FirstName { get; set; } = firstName;
@@ -10,3 +11,14 @@
 //     public int PhoneNumber { get; set; } = phoneNumber;
 
 // }
+
+public class User
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Password { get; set; }
+    public string Email { get; set; }
+    public int Id { get; set; }
+    public string PhoneNumber { get; set; }
+}
+

@@ -29,11 +29,11 @@
 //         return usersRead.ToList();
 //     }
 
+    public User? CreateOne(User user) // DOES NOT WROK SHOULD FIX IT 
+    {
+        var foundUser = _userRepository.FindOneByEmail(user.Email);
+        Console.WriteLine($"Create One method triggers");
 
-//     public User? CreateOne(User user)
-//     {
-//         var foundUser = _userRepository.FindOneByEmail(user.Email);
-//         Console.WriteLine($"Create One method triggers");
 
 //         if (foundUser is not null)
 //         {
@@ -67,5 +67,21 @@
 //         return null;
 //     }
 
+    public UserReadDto? CreateOneTest(UserCreateDto user)
+    {
+        var mappedUser = _mapper.Map<User>(user);
 
-// }
+        var foundUser = _userRepository.FindOneByEmail(mappedUser.Email);
+        Console.WriteLine($"Create One method triggers");
+
+        if (foundUser is not null)
+        {
+            Console.WriteLine($"user email is exist in database");
+            return null;
+        }
+
+        var userCreated = _userRepository.CreateOne(mappedUser);
+        return _mapper.Map<UserReadDto>(userCreated);
+    }
+}
+

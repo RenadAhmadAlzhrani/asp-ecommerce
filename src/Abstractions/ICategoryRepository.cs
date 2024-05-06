@@ -15,4 +15,5 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
         public Category UpdateOne( Guid categoryId,Category updatedCategory); 
 
         public IEnumerable<Category>? DeleteCategory(Guid categoryId);
-    }}
+    }
+}

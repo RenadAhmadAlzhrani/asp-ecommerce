@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using CodeCrafters_backend_teamwork.src.Abstractions;
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Services
@@ -10,19 +12,24 @@ namespace CodeCrafters_backend_teamwork.src.Services
     public class StockService : IStockService
     {
         private IStockRepository _stockRepository;
+        private readonly IMapper _mapper;
 
-        public StockService(IStockRepository stockRepository)
+        public StockService(IStockRepository stockRepository, IMapper mapper)
         {
             _stockRepository = stockRepository;
+            _mapper=mapper;
         }
 
-        public IEnumerable<Stock> FindMany()
+        public IEnumerable<StockReadDto> FindMany()
     {
-        return _stockRepository.FindMany();
+        IEnumerable<Stock> Stocks = _stockRepository.FindMany();
+        return Stocks.Select(_mapper.Map<StockReadDto>);
     }
-    public IEnumerable<Stock> CreateOne(Stock stock)
+    public StockReadDto CreateOne(StockCreateDto newStock)
     {
-        return _stockRepository.CreateOne(stock);
+        Stock stock = _mapper.Map<Stock>(newStock);
+         _stockRepository.CreateOne(stock);
+         return _mapper.Map<StockReadDto>(stock);
     }
 
     public Stock? FindOne(Guid stockId)
