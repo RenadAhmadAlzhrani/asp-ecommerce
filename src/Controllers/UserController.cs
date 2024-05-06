@@ -1,6 +1,7 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
+using CodeCrafters_backend_teamwork.src.Services;
 using CodeCrafters_backend_teamwork.src.Utility;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,6 +47,22 @@ public class UserController : CustomizedController
       {
 
          var createdUser = _userService.CreateOne(user);
+         return CreatedAtAction(nameof(CreateOne), createdUser);
+      }
+      return BadRequest();
+
+   }
+   [HttpPost("/test")]
+   [ProducesResponseType(StatusCodes.Status201Created)]
+   [ProducesResponseType(StatusCodes.Status400BadRequest)]
+   public ActionResult<UserReadDto> CreateOneTest([FromBody] UserCreateDto user)
+   {
+      Console.WriteLine($"{user.Email}");
+
+      if (user is not null)
+      {
+
+         var createdUser = _userService.CreateOneTest(user);
          return CreatedAtAction(nameof(CreateOne), createdUser);
       }
       return BadRequest();

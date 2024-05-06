@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Service.cs
 {
@@ -63,9 +65,10 @@ namespace CodeCrafters_backend_teamwork.src.Service.cs
         }
     }
 
-
-
+    public class OrderItemReadDto
+    {
     }
+}
 
 
 

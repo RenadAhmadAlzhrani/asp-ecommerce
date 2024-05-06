@@ -15,8 +15,8 @@ namespace CodeCrafters_backend_teamwork.src.Entities
 
     public OrderItem(Guid id, int orderCheckoutId, int stockId, int quantity)
     {
-        Id = id;
-        OrderCheckoutId = orderCheckoutId;
+        Id = id ;
+        OrderCheckoutId = orderCheckoutd;
         StockId = stockId;
         Quantity = quantity;
 
