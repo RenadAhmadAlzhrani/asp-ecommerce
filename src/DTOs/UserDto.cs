@@ -1,4 +1,3 @@
-namespace CodeCrafters_backend_teamwork.src.DTOs;
 
 public class UserReadDto
 {
@@ -18,5 +17,4 @@ public class UserCreateDto
     public int? PhoneNumber { get; set; }
     public string Password { get; set; }
 }
-
 

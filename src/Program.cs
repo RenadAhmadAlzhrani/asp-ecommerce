@@ -15,6 +15,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -50,10 +51,12 @@ builder.Services.AddSwaggerGen();
 
 
 
+
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 // dependency inject
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -75,5 +78,9 @@ app.MapControllers();
 
 app.UseHttpsRedirection();
 
- 
+             CreateMap<CategoryReadDto, Category>();
+            CreateMap<Category, CategoryReadDto>();
+            CreateMap<CategoryUpdateDto, Category>();
+            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
+            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
 app.Run();

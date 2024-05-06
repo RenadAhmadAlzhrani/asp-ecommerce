@@ -1,5 +1,3 @@
-using CodeCrafters_backend_teamwork.src.DTOs;
-using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Abstractions
 {
