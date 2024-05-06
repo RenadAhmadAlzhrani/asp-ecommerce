@@ -15,6 +15,7 @@ builder.Services.AddDbContext<DatabaseContext>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 
 builder.Services.AddScoped<IProductService, ProductService>();
@@ -30,6 +31,7 @@ builder.Services.AddAutoMapper(typeof(Program).Assembly);
 // Learn more about configuring Swagger/OpenAPI att https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 
 
@@ -52,6 +54,5 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.UseHttpsRedirection();
-
 
 app.Run();

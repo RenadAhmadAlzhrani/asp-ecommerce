@@ -9,33 +9,57 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeCrafters_backend_teamwork.src.Controller
 {
-
-    public class OrderCheckoutController : CustomizedController 
+    public class OrderCheckoutController : CustomizedController
     {
         private IOrderCheckoutService _orderCheckoutService;
+
+
         public OrderCheckoutController (IOrderCheckoutService orderCheckoutService)
-        {
-            _orderCheckoutService = orderCheckoutService ;
+
+        { 
+            _orderCheckoutService = orderCheckoutService;
+
         }
+
+
 
         [HttpGet]
-        public IEnumerable<OrderCheckout> FindAll([FromQuery] Guid usersId )
-        
+        public IEnumerable<OrderCheckout> FindMany()
         {
-            return _orderCheckoutService.FindAll(usersId);
+
+            return _orderCheckoutService.FindMany();
+
         }
 
-        [HttpGet("{id}")]
-        public OrderCheckout FindOne(Guid id)
+        [HttpGet("{orderCheckoutId}")]
+        public OrderCheckout? FindOne(Guid orderCheckoutId)
         {
-            return _orderCheckoutService.FindOne(id);
+
+            return _orderCheckoutService.FindOne(orderCheckoutId);
+
         }
+
 
         [HttpPost]
-        public OrderCheckout CreateOne([FromBody] OrderCheckout newOrderCheckout)
+        public IEnumerable<OrderCheckout> CreateOne([FromBody] OrderCheckout orderCheckout)
+
         {
-            return _orderCheckoutService.CreateOne(newOrderCheckout);
+
+            return _orderCheckoutService.CreateOne(orderCheckout);
+
         }
 
-    }
-}
+
+
+        [HttpDelete("{orderCheckoutId}")]
+        public IEnumerable<OrderCheckout>? DeleteOne([FromRoute] Guid orderCheckoutId)
+        {
+            return _orderCheckoutService.DeleteOne(orderCheckoutId);
+        }
+
+        [HttpPatch("{orderCheckoutId}")]
+        public OrderCheckout UpdateOne(Guid orderCheckoutId, OrderCheckout updatedCheckout)
+        {
+            return _orderCheckoutService.UpdateOne(orderCheckoutId, updatedCheckout);
+        }
+}}

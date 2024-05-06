@@ -8,6 +8,7 @@ namespace CodeCrafters_backend_teamwork.src.Mappers
     {
         public Mapper()
         {
+
             CreateMap<User, UserReadDto>();
             CreateMap<UserReadDto, User>();
             CreateMap<UserCreateDto, User>();
@@ -17,8 +18,14 @@ namespace CodeCrafters_backend_teamwork.src.Mappers
 
             CreateMap<StockCreateDto, Stock>();
             CreateMap<Stock, StockReadDto>();
+            CreateMap<CategoryReadDto, Category>();
+            CreateMap<Category, CategoryReadDto>();
+            CreateMap<CategoryUpdateDto, Category>();
+            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
+            CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
 
             
+
         }
     }
 }

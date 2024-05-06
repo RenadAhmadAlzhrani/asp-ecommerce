@@ -1,12 +1,5 @@
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-
-using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
-using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +19,7 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         public CategoryController(ICategoryService categoryService)
 
         {
-            // category = new DatabaseContext().Category; 
+ 
             _categoryService = categoryService;
 
         }
@@ -62,7 +55,7 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpDelete("{categoryId}")]
-        public IEnumerable<Category> DeleteCategory([FromRoute] Guid categoryId)
+        public IEnumerable<Category>? DeleteCategory([FromRoute] Guid categoryId)
         {
             return _categoryService.DeleteCategory(categoryId);
         }
@@ -72,77 +65,5 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         {
             return _categoryService.UpdateOne(categoryId, updatedCategory);
         }
-
-
-
-// using System;
-// using System.Collections.Generic;
-
-// using System.Linq;
-
-// using System.Threading.Tasks;
-// using CodeCrafters_backend_teamwork.src.Databases;
-// using CodeCrafters_backend_teamwork.src.Entities;
-
-// using Microsoft.AspNetCore.Mvc;
-
-
-
-// namespace CodeCrafters_backend_teamwork.src.Controller
-
-// {
-
-//     [ApiController]
-
-//     [Route("api/[controller]")]
-
-//     public class CategoryController : ControllerBase
-
-//     {
-
-//         public IEnumerable<CategoryController> category;
-
-
-
-//         public CategoryController()
-
-//         {
-
-//             category = new DatabaseContext().Category;
-
-//         }
-
-
-
-//         [HttpGet]
-
-//         public IEnumerable<CategoryController> FindAll()
-
-//         {
-
-//             return category;
-
-//         }
-
-
-
-//         [HttpGet("{productId}")]
-
-//         public CategoryController FindOne(CategoryController category)
-
-//         {
-
-//             return category;
-
-//         }
-
-
-
-//         [HttpPost]
-
-//         public CategoryController CreateOne(CategoryController category)
-
-//         {
-
-//             return category;
-
+    }
+}
