@@ -13,16 +13,9 @@ public class DatabaseContext : DbContext
     public DbSet<Stock> Stocks { get; set; }
     private IConfiguration _config;
     public IEnumerable<OrderCheckout> orderCheckouts { get; }
-    public IEnumerable<Category> category { get; }
+    public DbSet<Category> Category { get; set; }
     public DatabaseContext()
     {
-        category =
-        [
-            new Category("Channel"),
-            new Category("miu miu"),
-            new Category("Gucci")
-        ];
-
 
         orderCheckouts =
         [
