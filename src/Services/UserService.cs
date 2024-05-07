@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 using AutoMapper;
 using CodeCrafters_backend_teamwork.src.Abstractions;
@@ -5,6 +7,8 @@ using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Utility;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CodeCrafters_backend_teamwork.src.Services;
 
@@ -28,8 +32,24 @@ public class UserService : IUserService
         var usersRead = users.Select(_mapper.Map<UserReadDto>);
         return usersRead.ToList();
     }
+    // public UserReadDto? CreateOneTest(UserCreateDto user)
+    // {
+    //     var mappedUser = _mapper.Map<User>(user);
 
-    public UserReadDto? SignIn(UserSignIn userSign)
+    //     var foundUser = _userRepository.FindOneByEmail(mappedUser.Email);
+    //     Console.WriteLine($"Create One method triggers");
+
+    //     if (foundUser is not null)
+    //     {
+    //         Console.WriteLine($"user email is exist in database");
+    //         return null;
+    //     }
+
+    //     var userCreated = _userRepository.CreateOne(mappedUser);
+    //     return _mapper.Map<UserReadDto>(userCreated);
+    // }
+
+    public string? SignIn(UserSignIn userSign)
     {
         User? user = _userRepository.FindOneByEmail(userSign.Email);
         if (user is null)
@@ -40,11 +60,28 @@ public class UserService : IUserService
 
         bool isCorrectPass = PasswordUtils.VerifyPassword(userSign.Password, user.Password, pepper);
         if (!isCorrectPass) return null;
+        
+        // the auth code here 
+        var claims = new[] 
+        {
+            new Claim(ClaimTypes.Name, user.FirstName),
+             new Claim(ClaimTypes.Role, user.Role.ToString()),
+              new Claim(ClaimTypes.Email, user.Email),
+        };
 
-        UserReadDto userRead = _mapper.Map<UserReadDto>(user);
-        return userRead;
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SigningKey"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+        var token = new JwtSecurityToken(
+            issuer: _config["Jwt:Issuer"],
+            audience: _config["Jwt:Audience"],
+            claims: claims,
+            expires: DateTime.Now.AddDays(7),
+            signingCredentials: creds
+        );
 
+        var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+        return tokenString;
     }
 
     public UserReadDto? SignUp(UserCreateDto user)
@@ -89,27 +126,28 @@ public class UserService : IUserService
         return null;
     }
 
-    public bool DeleteOne(Guid id)
+    public IEnumerable<UserReadDto> DeleteOne(Guid userId)
     {
-        return _userRepository.DeleteOne(id);
+        return (IEnumerable<UserReadDto>)_userRepository.DeleteOne(userId);
     }
-
-    // User? IUserService.CreateOne(User user)
-    // {
-    //     throw new NotImplementedException();
-    // }
-
-    // UserReadDto IUserService.DeleteOne(User userId)
-    // {
-    //     throw new NotImplementedException();
-    // }
 
     public User FindOne(Guid userId)
     {
         throw new NotImplementedException();
     }
 
+
+    IEnumerable<User> IUserService.DeleteOne(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
     UserReadDto IUserService.FindOne(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    string IUserService.SignIn(UserSignIn user)
     {
         throw new NotImplementedException();
     }

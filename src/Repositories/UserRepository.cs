@@ -1,20 +1,19 @@
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
-using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
-using System.Linq;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Repositories;
 
 public class UserRepository : IUserRepository
 {
-     private IEnumerable<User> _users;
+     private DbSet<User> _users;
      private DatabaseContext _databaseContext;
      public UserRepository(DatabaseContext databaseContext)
      {
-          _users = new DatabaseContext().Users;
-         _databaseContext = databaseContext;
+          _databaseContext = databaseContext;
+
+          _users = databaseContext.Users;
      }
 
      public IEnumerable<User> FindMany()
@@ -23,9 +22,8 @@ public class UserRepository : IUserRepository
      }
      public User CreateOne(User user)
      {
-          //_users.Add(user); uncomment for later use of db 
-          // _databaseContext.SaveChanges();
-          _users = _users.Append(user); //this will be removed later 
+          _users.Add(user);  
+          _databaseContext.SaveChanges(); 
           return user;
      }
 
@@ -37,37 +35,37 @@ public class UserRepository : IUserRepository
 
      public User UpdateOne(User updatedUser)
      {
-          var users = _users.Select(user =>
-           {
-                if (user.Email == updatedUser.Email)
-                {
-                     return updatedUser;
-
-                }
-                return user;
-           });
-
-          _users = users.ToList();
+          _users.Update(updatedUser);
+          _databaseContext.SaveChanges();
           return updatedUser;
+           }
 
-     }
-
- public bool DeleteOne(Guid id)
-    {
-        User user = FindOne(id);
-        if (user is null) return false;
-        _users.Remove(user);
-        _databaseContext.SaveChanges();
-        return true;
-    }
-
-    private User? FindOne(Guid userId)
+    public IEnumerable<User> DeleteOne(Guid userId)
     {
         throw new NotImplementedException();
     }
 
 
-    public User DeleteOne(User userId)
+     public User? DeleteOne(Guid userId)
+     {
+          var deleteUser = FindOne(userId);
+        _ = _users.Where(user => deleteUser.userId == userId);
+          _databaseContext.SaveChanges();
+          return deleteUser;
+     }
+
+     private User? FindOne(Guid userId)
+     {
+          throw new NotImplementedException();
+     }
+
+
+     public User DeleteOne(User userId)
+     {
+          throw new NotImplementedException();
+     }
+
+    IEnumerable<User> IUserRepository.DeleteOne(Guid id)
     {
         throw new NotImplementedException();
     }

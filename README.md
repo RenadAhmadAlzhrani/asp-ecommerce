@@ -12,7 +12,6 @@ This repository contains ASP.NET Core application with RESTful API endpoints for
 4. Each change should be done in a separate pull request.
 5. Pull request must be reviewed by all members before merged to admin repo.
 6. Admin should open a PR to the original (Integrify) repo.
-
 Please ask your instructor or supporting instructor if you have any questions or need help.
 
 ## Database Requirements

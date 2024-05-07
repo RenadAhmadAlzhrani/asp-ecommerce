@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Databases;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Repositories
 {
     public class StockRepository : IStockRepository
     {
-        private IEnumerable<Stock> _stocks;
+        private DbSet<Stock> _stocks;
+        private DatabaseContext _databaseContext;
 
-        public StockRepository()
+        public StockRepository(DatabaseContext databaseContext)
         {
-            _stocks = new DatabaseContext().Stocks;
+            _databaseContext = databaseContext; 
+            _stocks = databaseContext.Stocks;
 
         }
         public IEnumerable<Stock> FindMany()
@@ -23,37 +26,36 @@ namespace CodeCrafters_backend_teamwork.src.Repositories
         }
         public IEnumerable<Stock> CreateOne(Stock stock)
         {
-            _stocks = _stocks.Append(stock);
+            _stocks.Add(stock);
+            _databaseContext.SaveChanges(); 
             return _stocks;
 
         }
-        public Stock? FindOne(Guid stockId) //doesn't work
+        public Stock? FindOne(Guid stockId) 
         {
             Stock? stock = _stocks.FirstOrDefault(stock => stock.Id == stockId);
             return stock;
 
-            //  Stock? stock = _stocks.FirstOrDefault(stock => stock.Id.Equals(stockId));
-            //     return stock;
         }
-        public IEnumerable<Stock>? DeleteProduct(Guid stockId) // also 
+        public IEnumerable<Stock>? DeleteProduct(Guid stockId)  
         {
-            Stock? stock = FindOne(stockId);
-            if (stock != null)
+             Stock? stockFound = FindOne(stockId);
+            if(stockFound != null)
             {
-                var stocks = _stocks.Where((s) => s.Id != stockId);
-                //var stocks = _stocks.Where((s) => !s.Id.Equals(stockId));
-                _stocks = stocks;
-                return _stocks;
+            _stocks.Remove(stockFound); 
+            _databaseContext.SaveChanges();
             }
-            return null;
+            return _stocks; 
+
         }
-        public Stock UpdateOne(Guid stockId, Stock updatedStock)
+        public Stock UpdateOne(Guid stockId, Stock updatedStock) 
         {
 
             Stock? stock = _stocks.FirstOrDefault(stock => stock.Id == stockId);
             if (stock != null)
             {
-                stock.Id = updatedStock.Id;
+                stock.Size = updatedStock.Size;
+                _databaseContext.SaveChanges(); 
                 return stock;
             }
 

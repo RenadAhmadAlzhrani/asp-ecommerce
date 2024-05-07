@@ -5,25 +5,29 @@ using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Repositories;
 
 public class ProductRepository : IProductRepository
 {
-    private IEnumerable<Product> _products;
+    private DbSet<Product> _products;
+    private DatabaseContext _databasecontext;
 
-    public ProductRepository()
+    public ProductRepository(DatabaseContext databaseContext)
     {
-        _products = new DatabaseContext().Products;
+        _products = databaseContext.Products;
+        _databasecontext = databaseContext;
 
     }
     public IEnumerable<Product> FindMany()
     {
         return _products;
     }
-    public IEnumerable<Product> CreateOne(Product product)
+    public IEnumerable<Product> CreateOne(Product product) // POST DOES NOT WORK 
     {
-        _products = _products.Append(product);
+        _products.Add(product);
+        _databasecontext.SaveChanges(); // add this and the above to the other entities repos
         return _products;
 
     }
@@ -34,14 +38,13 @@ public class ProductRepository : IProductRepository
     }
     public IEnumerable<Product>? DeleteProduct(Guid productId)
     {
-        Product? product = FindOne(productId);
-        if (product != null)
+        Product? productFound = FindOne(productId);
+        if (productFound != null)
         {
-            var products = _products.Where((p) => p.Id != productId);
-            _products = products;
-            return _products;
+            _products.Remove(productFound);
+            _databasecontext.SaveChanges();
         }
-        return null;
+        return _products;
     }
     public Product UpdateOne(Guid productId, Product updatedProduct)
     {
@@ -50,6 +53,7 @@ public class ProductRepository : IProductRepository
         if (product != null)
         {
             product.Name = updatedProduct.Name;
+            _databasecontext.SaveChanges();
             return product;
         }
 

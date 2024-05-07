@@ -6,24 +6,32 @@ using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.Databases;
+using CodeCrafters_backend_teamwork.src.DTOs;
+using AutoMapper;
 
 namespace CodeCrafters_backend_teamwork.src.Services;
 
 public class ProductService : IProductService
 {
     private IProductRepository _productRepository;
+    private readonly IMapper _mapper;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, IMapper mapper)
     {
         _productRepository = productRepository;
+        _mapper = mapper;
     }
-    public IEnumerable<Product> FindMany()
+    public IEnumerable<ProductReadDto> FindMany()
     {
-        return _productRepository.FindMany();
+        IEnumerable<Product> products = _productRepository.FindMany();
+        return products.Select(_mapper.Map<ProductReadDto>);
     }
-    public IEnumerable<Product> CreateOne(Product product)
+    public ProductReadDto CreateOne(ProductCreateDto newProduct)
     {
-        return _productRepository.CreateOne(product);
+        Product product = _mapper.Map<Product>(newProduct);
+        _productRepository.CreateOne(product);
+
+        return _mapper.Map<ProductReadDto>(product);
     }
 
     public Product? FindOne(Guid productId)

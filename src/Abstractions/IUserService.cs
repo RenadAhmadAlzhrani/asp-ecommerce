@@ -7,11 +7,11 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
     {
         public IEnumerable<UserReadDto> FindMany();
         public UserReadDto SignUp(UserCreateDto user);
-        public UserReadDto SignIn(UserSignIn user);
+        public string SignIn(UserSignIn user);
         public UserReadDto? FindOneByEmail(string email);
         public User UpdateOne(string email, User newValue);
          
          public UserReadDto FindOne(Guid id);
-         public bool DeleteOne(Guid id); 
+         public IEnumerable<User> DeleteOne(Guid userId); 
     }
 }

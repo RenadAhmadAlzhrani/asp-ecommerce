@@ -2,6 +2,7 @@ using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,7 @@ public class UserController : CustomizedController
    }
 
    [HttpGet]
+   [Authorize(Roles = "Admin")]
    [ProducesResponseType(StatusCodes.Status200OK)]
    public IEnumerable<UserReadDto> FindMany()
    {
@@ -57,34 +59,35 @@ public class UserController : CustomizedController
    [ProducesResponseType(StatusCodes.Status200OK)]
    [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-   public ActionResult<UserReadDto> SignIn([FromBody] UserSignIn user)
+   public ActionResult<string> SignIn([FromBody] UserSignIn user)
    {
 
       if (user is not null)
       {
-         UserReadDto? userRead = _userService.SignIn(user);
-         if (userRead is null)
+         string token = _userService.SignIn(user);
+         if (token is null)
          {
             return BadRequest();
          }
-         return Ok(user);
+         return Ok(token);
       }
       return BadRequest();
 
    }
 
 
-    [HttpDelete]
+    [HttpDelete("{userId}")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult DeleteOne(Guid id, User user)
+    public ActionResult<UserReadDto> DeleteOne( Guid userId)
     {
-        bool isDeleted = _userService.DeleteOne(id);
-        if (!isDeleted)
+        var deletedUser = _userService.FindOne(userId);
+        if (deletedUser != null)
         {
-            return NotFound();
+            return Ok(_userService.DeleteOne(userId));
         }
         return NoContent();
+        //(orderitem => orderitem.Id == id);
     }
 
 }
