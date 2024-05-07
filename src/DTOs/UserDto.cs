@@ -9,14 +9,6 @@ public class UserReadDto
     public string Role { get; set; }
 }
 
-public class UserCreateDto
-{
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-
-}
 public class UserSignIn
 {
     public string Email { get; set; }
