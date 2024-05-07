@@ -1,15 +1,5 @@
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Enums;
-
-using CodeCrafters_backend_teamwork.src.Controllers;
-
-using CodeCrafters_backend_teamwork.src.Entities;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -38,24 +28,17 @@ public class DatabaseContext : DbContext
     {
         _config = config;
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-
-        optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Database={_config["Db:Database"]};Password={_config["Db:Password"]}")
-       .UseSnakeCaseNamingConvention();
-    }
-
-
-
-    //for DB ef core implementation:
-    protected override void onConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseNpgsql().UseSnakeCaseNamingConvention();
 
         var dataSourceBuilder = new NpgsqlDataSourceBuilder(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};
         Database={_config["Db:Database"]};Password={_config["Db:Password"]}");
         dataSourceBuilder.MapEnum<Role>();
         var dataSource = dataSourceBuilder.Build();
+
+        optionsBuilder.UseNpgsql(dataSource).UseSnakeCaseNamingConvention();
+
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,8 +46,5 @@ public class DatabaseContext : DbContext
         modelBuilder.HasPostgresEnum<Role>();
     }
 
-    internal void SaveChanges()
-    {
-        throw new NotImplementedException();
-    }
+
 }

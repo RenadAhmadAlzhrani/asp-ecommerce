@@ -32,22 +32,6 @@ public class UserService : IUserService
         var usersRead = users.Select(_mapper.Map<UserReadDto>);
         return usersRead.ToList();
     }
-    // public UserReadDto? CreateOneTest(UserCreateDto user)
-    // {
-    //     var mappedUser = _mapper.Map<User>(user);
-
-    //     var foundUser = _userRepository.FindOneByEmail(mappedUser.Email);
-    //     Console.WriteLine($"Create One method triggers");
-
-    //     if (foundUser is not null)
-    //     {
-    //         Console.WriteLine($"user email is exist in database");
-    //         return null;
-    //     }
-
-    //     var userCreated = _userRepository.CreateOne(mappedUser);
-    //     return _mapper.Map<UserReadDto>(userCreated);
-    // }
 
     public string? SignIn(UserSignIn userSign)
     {
@@ -60,9 +44,9 @@ public class UserService : IUserService
 
         bool isCorrectPass = PasswordUtils.VerifyPassword(userSign.Password, user.Password, pepper);
         if (!isCorrectPass) return null;
-        
+
         // the auth code here 
-        var claims = new[] 
+        var claims = new[]
         {
             new Claim(ClaimTypes.Name, user.FirstName),
              new Claim(ClaimTypes.Role, user.Role.ToString()),
@@ -87,6 +71,7 @@ public class UserService : IUserService
     public UserReadDto? SignUp(UserCreateDto user)
     {
         var foundUser = _userRepository.FindOneByEmail(user.Email);
+
 
         if (foundUser is not null)
         {
@@ -152,3 +137,4 @@ public class UserService : IUserService
         throw new NotImplementedException();
     }
 }
+

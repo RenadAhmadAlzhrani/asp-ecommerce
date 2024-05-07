@@ -1,3 +1,4 @@
+
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
@@ -22,8 +23,8 @@ public class UserRepository : IUserRepository
      }
      public User CreateOne(User user)
      {
-          _users.Add(user);  
-          _databaseContext.SaveChanges(); 
+          _users.Add(user);
+          _databaseContext.SaveChanges();
           return user;
      }
 
@@ -38,18 +39,13 @@ public class UserRepository : IUserRepository
           _users.Update(updatedUser);
           _databaseContext.SaveChanges();
           return updatedUser;
-           }
-
-    public IEnumerable<User> DeleteOne(Guid userId)
-    {
-        throw new NotImplementedException();
-    }
+     }
 
 
      public User? DeleteOne(Guid userId)
      {
           var deleteUser = FindOne(userId);
-        _ = _users.Where(user => deleteUser.userId == userId);
+          _ = _users.Where(user => deleteUser.Id == userId);
           _databaseContext.SaveChanges();
           return deleteUser;
      }
@@ -65,8 +61,5 @@ public class UserRepository : IUserRepository
           throw new NotImplementedException();
      }
 
-    IEnumerable<User> IUserRepository.DeleteOne(Guid id)
-    {
-        throw new NotImplementedException();
-    }
 }
+
