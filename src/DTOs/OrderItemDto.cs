@@ -7,9 +7,9 @@ namespace CodeCrafters_backend_teamwork.src.DTO
 {
     public class OrderItemDto
     {
-        public string productId  {get;set;}
-        public int Quantity  {get;set;}
-        public double unitPrice  {get;set;}
+        public string ProductId { get; set; }
+        public int Quantity { get; set; }
+        public double UnitPrice { get; set; }
 
 
     }

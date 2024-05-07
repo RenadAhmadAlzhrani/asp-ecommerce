@@ -1,3 +1,4 @@
+using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
 
 namespace CodeCrafters_backend_teamwork.src.Abstractions
@@ -8,5 +9,6 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
         public User CreateOne(User user);
         public User? FindOneByEmail(string email);
         public User UpdateOne(User updatedUser);
+        public User? DeleteOne(Guid userId);
     }
 }

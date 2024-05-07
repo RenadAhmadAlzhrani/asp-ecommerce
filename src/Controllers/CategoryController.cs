@@ -18,17 +18,14 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         public CategoryController(ICategoryService categoryService)
 
         {
- 
+
             _categoryService = categoryService;
 
         }
 
-
-
         [HttpGet]
         public ActionResult<IEnumerable<CategoryReadDto>> FindMany()
         {
-
             return Ok(_categoryService.FindMany());
 
         }
@@ -47,7 +44,7 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
         {
 
-            return CreatedAtAction(nameof(CreateOne),_categoryService.CreateOne(newCategory));
+            return CreatedAtAction(nameof(CreateOne), _categoryService.CreateOne(newCategory));
 
         }
 
@@ -64,6 +61,6 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         {
             return _categoryService.UpdateOne(categoryId, updatedCategory);
         }
-  
+
     }
 }

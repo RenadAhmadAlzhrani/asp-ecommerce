@@ -39,7 +39,26 @@ public class UserRepository : IUserRepository
           _users.Update(updatedUser);
           _databaseContext.SaveChanges();
           return updatedUser;
+     }
 
+
+     public User? DeleteOne(Guid userId)
+     {
+          var deleteUser = FindOne(userId);
+          _ = _users.Where(user => deleteUser.Id == userId);
+          _databaseContext.SaveChanges();
+          return deleteUser;
+     }
+
+     private User? FindOne(Guid userId)
+     {
+          throw new NotImplementedException();
+     }
+
+
+     public User DeleteOne(User userId)
+     {
+          throw new NotImplementedException();
      }
 
 }
