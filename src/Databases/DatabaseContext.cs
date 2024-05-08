@@ -1,8 +1,7 @@
-
-using CodeCrafters_backend_teamwork.src.Controllers;
-
 using CodeCrafters_backend_teamwork.src.Entities;
+using CodeCrafters_backend_teamwork.src.Enums;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace CodeCrafters_backend_teamwork.src.Databases;
 public class DatabaseContext : DbContext
@@ -21,11 +20,23 @@ public class DatabaseContext : DbContext
     {
         _config = config;
     }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
-        optionsBuilder.UseNpgsql(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};Database={_config["Db:Database"]};Password={_config["Db:Password"]}")
-       .UseSnakeCaseNamingConvention();
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};
+        Database={_config["Db:Database"]};Password={_config["Db:Password"]}");
+        dataSourceBuilder.MapEnum<Role>();
+        var dataSource = dataSourceBuilder.Build();
+
+        optionsBuilder.UseNpgsql(dataSource).UseSnakeCaseNamingConvention();
+
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasPostgresEnum<Role>();
+    }
+
 
 }
