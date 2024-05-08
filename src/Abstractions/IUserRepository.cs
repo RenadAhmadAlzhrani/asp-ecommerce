@@ -9,6 +9,7 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
         public User CreateOne(User user);
         public User? FindOneByEmail(string email);
         public User UpdateOne(User updatedUser);
-        public User? DeleteOne(Guid userId);
+        public User DeleteOne(Guid userId);
+        public User FindOneById(Guid userId);
     }
 }

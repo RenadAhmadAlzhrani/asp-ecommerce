@@ -131,10 +131,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -165,7 +165,7 @@ namespace Backend.Migrations
                         .HasColumnType("role")
                         .HasColumnName("role");
 
-                    b.HasKey("Id")
+                    b.HasKey("UserId")
                         .HasName("pk_users");
 
                     b.HasIndex("Email")

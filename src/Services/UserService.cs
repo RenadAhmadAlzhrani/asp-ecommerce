@@ -28,9 +28,9 @@ public class UserService : IUserService
 
     public IEnumerable<UserReadDto> FindMany()
     {
-        var users = _userRepository.FindMany();
-        var usersRead = users.Select(_mapper.Map<UserReadDto>);
-        return usersRead.ToList();
+        IEnumerable<User> users = _userRepository.FindMany();
+        return users.Select(_mapper.Map<UserReadDto>);
+
     }
 
     public string? SignIn(UserSignIn userSign)
@@ -48,9 +48,10 @@ public class UserService : IUserService
         // the auth code here 
         var claims = new[]
         {
-            new Claim(ClaimTypes.Name, user.FirstName),
-             new Claim(ClaimTypes.Role, user.Role.ToString()),
-              new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.FirstName.ToString()),
+            new Claim(ClaimTypes.Role, user.Role.ToString()),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SigningKey"]!));
@@ -70,7 +71,7 @@ public class UserService : IUserService
 
     public UserReadDto? SignUp(UserCreateDto user)
     {
-        var foundUser = _userRepository.FindOneByEmail(user.Email);
+        User? foundUser = _userRepository.FindOneByEmail(user.Email);
 
 
         if (foundUser is not null)
@@ -111,30 +112,17 @@ public class UserService : IUserService
         return null;
     }
 
-    public IEnumerable<UserReadDto> DeleteOne(Guid userId)
+    public User DeleteOne(Guid userId)
     {
-        return (IEnumerable<UserReadDto>)_userRepository.DeleteOne(userId);
+        return _userRepository.DeleteOne(userId);
     }
 
-    public User FindOne(Guid userId)
+    public UserReadDto? FindOneById(Guid userId)
     {
-        throw new NotImplementedException();
+        User? user = _userRepository.FindOneById(userId);
+        UserReadDto? usersRead = _mapper.Map<UserReadDto>(user);
+        return usersRead;
     }
 
-
-    IEnumerable<User> IUserService.DeleteOne(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    UserReadDto IUserService.FindOne(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    string IUserService.SignIn(UserSignIn user)
-    {
-        throw new NotImplementedException();
-    }
 }
 

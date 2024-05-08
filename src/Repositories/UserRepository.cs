@@ -44,22 +44,21 @@ public class UserRepository : IUserRepository
 
      public User? DeleteOne(Guid userId)
      {
-          var deleteUser = FindOne(userId);
-          _ = _users.Where(user => deleteUser.Id == userId);
+          var deleteUser = FindOneById(userId);
+          _ = _users.Where(user => deleteUser.UserId == userId);
           _databaseContext.SaveChanges();
           return deleteUser;
      }
 
-     private User? FindOne(Guid userId)
+     private User? FindOneById(Guid userId)
      {
-          throw new NotImplementedException();
+         User? user = _users.FirstOrDefault(user => user.UserId == userId);
+          return user;
      }
 
-
-     public User DeleteOne(User userId)
-     {
-          throw new NotImplementedException();
-     }
-
+    User IUserRepository.FindOneById(Guid userId)
+    {
+        throw new NotImplementedException();
+    }
 }
 

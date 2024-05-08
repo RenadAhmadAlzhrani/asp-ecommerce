@@ -13,14 +13,13 @@ public class DatabaseContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
 
     private IConfiguration _config;
-    public IEnumerable<OrderCheckout> orderCheckouts { get; }
+    public IEnumerable<OrderCheckout> OrderCheckouts { get; }
     public DbSet<Category> Category { get; set; }
     public DatabaseContext()
     {
 
-        orderCheckouts =
+        OrderCheckouts =
         [
-            new OrderCheckout(new DateTime(2023, 3, 1),12,12432,000557699,"Confirmed",10.000)
         ];
     }
 

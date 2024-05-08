@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240507090845_db-init")]
-    partial class dbinit
+    [Migration("20240508073658_DBInit")]
+    partial class DBInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,10 +134,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnName("user_id");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -168,7 +168,7 @@ namespace Backend.Migrations
                         .HasColumnType("role")
                         .HasColumnName("role");
 
-                    b.HasKey("Id")
+                    b.HasKey("UserId")
                         .HasName("pk_users");
 
                     b.HasIndex("Email")

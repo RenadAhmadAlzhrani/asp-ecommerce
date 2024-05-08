@@ -134,17 +134,17 @@ public class UserController : CustomizedController
 
 
    [HttpDelete("{userId}")]
-   [ProducesResponseType(StatusCodes.Status201Created)]
+   [ProducesResponseType(StatusCodes.Status204NoContent)]
    [ProducesResponseType(StatusCodes.Status404NotFound)]
-   public ActionResult<UserReadDto> DeleteOne(Guid userId)
+   public ActionResult<UserReadDto> DeleteOneById(Guid userId)
    {
-      var deletedUser = _userService.FindOne(userId);
+      var deletedUser = _userService.FindOneById(userId);
       if (deletedUser != null)
       {
-         return Ok(_userService.DeleteOne(userId));
+         return NoContent();
       }
-      return NoContent();
-      //(orderitem => orderitem.Id == id);
+      return NotFound();
+
    }
 
 }
