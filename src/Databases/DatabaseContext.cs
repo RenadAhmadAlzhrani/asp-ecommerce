@@ -14,16 +14,8 @@ public class DatabaseContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
 
     private IConfiguration _config;
-    public IEnumerable<OrderCheckout> orderCheckouts { get; }
+    public DbSet<OrderCheckout> OrderCheckouts { get; set; }
     public DbSet<Category> Category { get; set; }
-    public DatabaseContext()
-    {
-
-        orderCheckouts =
-        [
-            new OrderCheckout(new DateTime(2023, 3, 1),12,12432,000557699,"Confirmed",10.000)
-        ];
-    }
 
     public DatabaseContext(IConfiguration config)
     {

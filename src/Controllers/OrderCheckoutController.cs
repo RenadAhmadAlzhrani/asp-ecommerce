@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
+using CodeCrafters_backend_teamwork.src.DTO;
 using CodeCrafters_backend_teamwork.src.Entities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +25,10 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpGet]
-        public IEnumerable<OrderCheckout> FindMany()
+        public ActionResult<IEnumerable<OrderCheckout>> FindMany()
         {
 
-            return _orderCheckoutService.FindMany();
+            return Ok( _orderCheckoutService.FindMany());
 
         }
 
@@ -41,11 +42,11 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
 
         [HttpPost]
-        public IEnumerable<OrderCheckout> CreateOne([FromBody] OrderCheckout orderCheckout)
+        public ActionResult<IEnumerable<OrderCheckout>> CreateOne([FromBody] OrderCheckout orderCheckout)
 
         {
 
-            return _orderCheckoutService.CreateOne(orderCheckout);
+            return Ok(_orderCheckoutService.CreateOne(orderCheckout));
 
         }
 
@@ -61,5 +62,10 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         public OrderCheckout UpdateOne(Guid orderCheckoutId, OrderCheckout updatedCheckout)
         {
             return _orderCheckoutService.UpdateOne(orderCheckoutId, updatedCheckout);
+        }
+        [HttpPost("/checkout")]
+        public OrderCheckout Checkout(List<OrderItemCreateDto> orderItemCreateDtos)
+        {
+            return _orderCheckoutService.Checkout(orderItemCreateDtos); 
         }
 }}

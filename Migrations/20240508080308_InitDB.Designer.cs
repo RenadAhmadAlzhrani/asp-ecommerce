@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Backend.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240506120107_add-category")]
-    partial class addcategory
+    [Migration("20240508080308_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,13 +34,84 @@ namespace Backend.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("name");
 
                     b.HasKey("Id")
                         .HasName("pk_category");
 
                     b.ToTable("category", (string)null);
+                });
+
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.OrderCheckout", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("PaymentId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("payment_id");
+
+                    b.Property<Guid>("ShippingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("shipping_id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("status");
+
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double precision")
+                        .HasColumnName("total_price");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_order_checkouts");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_order_checkouts_user_id");
+
+                    b.ToTable("order_checkouts", (string)null);
+                });
+
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("OrderCheckoutId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_checkout_id");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<Guid>("StockId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("stock_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_order_items");
+
+                    b.HasIndex("OrderCheckoutId")
+                        .HasDatabaseName("ix_order_items_order_checkout_id");
+
+                    b.ToTable("order_items", (string)null);
                 });
 
             modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.Product", b =>
@@ -70,6 +141,9 @@ namespace Backend.Migrations
                     b.HasKey("Id")
                         .HasName("pk_products");
 
+                    b.HasIndex("CategoryId")
+                        .HasDatabaseName("ix_products_category_id");
+
                     b.ToTable("products", (string)null);
                 });
 
@@ -89,6 +163,10 @@ namespace Backend.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("product_id");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
                     b.Property<string>("Size")
                         .IsRequired()
                         .HasColumnType("text")
@@ -105,12 +183,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
+                        .HasColumnType("uuid")
                         .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -143,6 +219,36 @@ namespace Backend.Migrations
                     b.ToTable("users", (string)null);
                 });
 
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.OrderCheckout", b =>
+                {
+                    b.HasOne("User", null)
+                        .WithMany("OrderCheckouts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_checkouts_users_user_id");
+                });
+
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.OrderItem", b =>
+                {
+                    b.HasOne("CodeCrafters_backend_teamwork.src.Entities.OrderCheckout", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderCheckoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_items_order_checkouts_order_checkout_id");
+                });
+
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.Product", b =>
+                {
+                    b.HasOne("CodeCrafters_backend_teamwork.src.Entities.Category", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_category_category_id");
+                });
+
             modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.Stock", b =>
                 {
                     b.HasOne("CodeCrafters_backend_teamwork.src.Entities.Product", null)
@@ -153,9 +259,24 @@ namespace Backend.Migrations
                         .HasConstraintName("fk_stocks_products_product_id");
                 });
 
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.OrderCheckout", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("CodeCrafters_backend_teamwork.src.Entities.Product", b =>
                 {
                     b.Navigation("Stock");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("OrderCheckouts");
                 });
 #pragma warning restore 612, 618
         }

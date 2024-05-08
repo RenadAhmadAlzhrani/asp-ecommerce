@@ -10,8 +10,8 @@ namespace CodeCrafters_backend_teamwork.src.Abstrations
     public interface IOrderItemService
     {
         public IEnumerable<OrderItemReadDto> FindMany();
-        public OrderItemReadDto? FindOne(Guid id);
-        public OrderItemReadDto CreateOne(OrderItemReadDto OrderItem);
-        public OrderItemReadDto? UpdateOne(Guid id, OrderItem orderItem);
+        public OrderItemReadDto? FindOne(Guid orderItemId);
+        public OrderItemReadDto CreateOne(OrderItemReadDto orderItem);
+        public OrderItemReadDto? UpdateOne(Guid orderItemId, OrderItem orderItem);
     }
 }

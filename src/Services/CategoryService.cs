@@ -10,18 +10,19 @@ namespace CodeCrafters_backend_teamwork.src.Services
         private ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository , IMapper mapper)
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
-            _mapper= mapper;
+            _mapper = mapper;
         }
 
-        public CategoryReadDto CreateOne(CategoryCreateDto newCategory)
+        public IEnumerable<CategoryReadDto> CreateOne(CategoryCreateDto newCategory)
         {
             Category category = _mapper.Map<Category>(newCategory);
-            _categoryRepository.CreateOne(category);
-            return _mapper.Map<CategoryReadDto>(category);
-        } 
+            var categoryList = _categoryRepository.CreateOne(category);
+            var mappedCategoryList = categoryList.Select(_mapper.Map<CategoryReadDto>);
+            return mappedCategoryList;
+        }
 
         public IEnumerable<CategoryReadDto> FindMany()
         {
@@ -42,8 +43,8 @@ namespace CodeCrafters_backend_teamwork.src.Services
         }
 
         public IEnumerable<Category>? DeleteCategory(Guid categoryId)
-    {
-        return _categoryRepository.DeleteCategory(categoryId);
+        {
+            return _categoryRepository.DeleteCategory(categoryId);
         }
     }
 }
