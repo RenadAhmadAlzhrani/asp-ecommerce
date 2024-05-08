@@ -11,8 +11,7 @@ namespace CodeCrafters_backend_teamwork.src.Controllers
     public class OrderItemController : CustomizedController
     {
 
-
-        IEnumerable<OrderItem> orderitem;
+        public IEnumerable<OrderItem> orderitem;
         [HttpGet]
         public IEnumerable<OrderItem> FindMany()
         {

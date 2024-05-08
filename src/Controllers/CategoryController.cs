@@ -1,8 +1,9 @@
+using System.Security.Claims;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.DTOs;
 using CodeCrafters_backend_teamwork.src.Entities;
-
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -20,12 +21,17 @@ namespace CodeCrafters_backend_teamwork.src.Controller
         {
 
             _categoryService = categoryService;
-
         }
-
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<CategoryReadDto>> FindMany()
         {
+            var userId = ClaimTypes.NameIdentifier;
+            var userEmail = ClaimTypes.Email;
+
+            Console.WriteLine($"user Id {userId}");
+            Console.WriteLine($"user email {userEmail}");
+
             return Ok(_categoryService.FindMany());
 
         }

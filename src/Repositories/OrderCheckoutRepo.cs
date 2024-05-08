@@ -9,21 +9,21 @@ using CodeCrafters_backend_teamwork.src.Entities;
 namespace CodeCrafters_backend_teamwork.src.Reository
 {
     public class OrderCheckoutRepo : IOrderCheckoutRepository
-   {
+    {
         private IEnumerable<OrderCheckout> _checkouts = [];
 
         public OrderCheckoutRepo()
         {
-            _checkouts = new DatabaseContext().orderCheckouts;
+            _checkouts = [];
         }
 
         public IEnumerable<OrderCheckout> CreateOne(OrderCheckout newOrderCheckout)
         {
-           _checkouts =_checkouts.Append(newOrderCheckout);
+            _checkouts = _checkouts.Append(newOrderCheckout);
             return _checkouts;
         }
 
-         public OrderCheckout? FindOne(Guid orderCheckoutId)
+        public OrderCheckout? FindOne(Guid orderCheckoutId)
         {
             return _checkouts.FirstOrDefault((orderCheckout) => orderCheckout.Id == orderCheckoutId);
         }
@@ -33,10 +33,10 @@ namespace CodeCrafters_backend_teamwork.src.Reository
             return _checkouts;
         }
 
-        public IEnumerable<OrderCheckout>? DeleteOne(Guid orderCheckoutId) 
+        public IEnumerable<OrderCheckout>? DeleteOne(Guid orderCheckoutId)
         {
 
-           _checkouts.Where((o) => o.Id != orderCheckoutId);
+            _checkouts.Where((o) => o.Id != orderCheckoutId);
             return _checkouts;
 
         }
@@ -45,7 +45,7 @@ namespace CodeCrafters_backend_teamwork.src.Reository
         public OrderCheckout UpdateOne(Guid orderCheckoutId, OrderCheckout updatedCheckout)
         {
 
-            OrderCheckout? orderCheckout =_checkouts.FirstOrDefault(orderCheckout => orderCheckout.Id == orderCheckoutId);
+            OrderCheckout? orderCheckout = _checkouts.FirstOrDefault(orderCheckout => orderCheckout.Id == orderCheckoutId);
             if (orderCheckout != null)
             {
                 orderCheckout.Id = updatedCheckout.Id;
@@ -54,6 +54,6 @@ namespace CodeCrafters_backend_teamwork.src.Reository
 
             return updatedCheckout;
 
-        }    
-  }
+        }
+    }
 }

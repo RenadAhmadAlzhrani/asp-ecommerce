@@ -9,7 +9,7 @@ namespace CodeCrafters_backend_teamwork.src.DTOs
     {
          public Guid Id {get ; set;}
         public int PaymentId {get ; set;}
-        public int UsersId {get ; set;}
+        public Guid UserId {get ; set;}
         public int ShippingId {get ; set;}
         public required string Status {get ; set;}
         public double TotalPrice {get ; set;}

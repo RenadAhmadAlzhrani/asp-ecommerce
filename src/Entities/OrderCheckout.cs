@@ -10,16 +10,16 @@ namespace CodeCrafters_backend_teamwork.src.Entities;
     {
         public Guid Id {get ; set;}
         public int PaymentId {get ; set;}
-        public int UsersId {get ; set;}
+        public Guid UserId {get ; set;}
         public int ShippingId {get ; set;}
         public string Status {get ; set;}
         public double TotalPrice {get ; set;}
 
-        public OrderCheckout( DateTime createdAt ,int usersId , int shippingId ,int paymentId, string status ,double totalPrice)
+        public OrderCheckout( DateTime createdAt ,Guid userId , int shippingId ,int paymentId, string status ,double totalPrice)
     {
         Id = Guid.NewGuid();
         PaymentId =  paymentId;
-        UsersId = usersId;
+        UserId = userId;
         ShippingId = shippingId;
         Status = status;
         TotalPrice = totalPrice; 
