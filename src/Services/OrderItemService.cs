@@ -27,10 +27,10 @@ namespace CodeCrafters_backend_teamwork.src.Service.cs
         }
 
 
-        public OrderItemReadDto? FindOne (Guid id)
+        public OrderItemReadDto? FindOne (Guid orderItemId)
         {
 
-            OrderItem ? orderItem =_orderItemRepository.FindOne(id);
+            OrderItem ? orderItem =_orderItemRepository.FindOne(orderItemId);
             OrderItemReadDto? orderItemRead =_mapper.Map<OrderItemReadDto>(orderItem);
             return orderItemRead;
         }

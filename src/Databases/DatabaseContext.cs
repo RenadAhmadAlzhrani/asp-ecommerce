@@ -13,15 +13,8 @@ public class DatabaseContext : DbContext
     public DbSet<OrderItem> OrderItems { get; set; }
 
     private IConfiguration _config;
-    public IEnumerable<OrderCheckout> OrderCheckouts { get; }
+    public DbSet<OrderCheckout> OrderCheckouts { get; set; }
     public DbSet<Category> Category { get; set; }
-    public DatabaseContext()
-    {
-
-        OrderCheckouts =
-        [
-        ];
-    }
 
     public DatabaseContext(IConfiguration config)
     {

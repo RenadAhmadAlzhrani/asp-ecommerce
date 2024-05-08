@@ -6,6 +6,7 @@ using CodeCrafters_backend_teamwork.src.Controllers;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
 using CodeCrafters_backend_teamwork.src.Service;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace CodeCrafters_backend_teamwork.src.Repository
@@ -13,7 +14,7 @@ namespace CodeCrafters_backend_teamwork.src.Repository
     public class OrderItemRepository : IOrderItemRepository
     {
 
-        private IEnumerable<OrderItem> _orderItems { get; set; }
+        private DbSet<OrderItem> _orderItems { get; set; }
         private DatabaseContext _databaseContext;
 
         public OrderItemRepository(DatabaseContext databaseContext)
@@ -39,25 +40,25 @@ namespace CodeCrafters_backend_teamwork.src.Repository
 
         public OrderItem CreateOne(OrderItem orderItem)
         {
-            _orderItems.Append(orderItem);
+            _orderItems.Add(orderItem);
+            _databaseContext.SaveChanges();
             return orderItem;
         }
 
-        public OrderItem UpdateOne(OrderItem updatedOrderItem)
+        public OrderItem? UpdateOne(OrderItem updatedOrderItem)
         {
-            var orderItems = _orderItems.Select(orderItem =>
-            {
-                if (orderItem.Id == updatedOrderItem.Id)
+            // var orderItems = _orderItems.Select(orderItem =>
+            // {
+            //     if (orderItem.Id == updatedOrderItem.Id)
 
-                {
-                    return updatedOrderItem;
-                }
-                return orderItem;
-            });
-            _orderItems = orderItems;
-            return updatedOrderItem;
-
-
+            //     {
+            //         return updatedOrderItem;
+            //     }
+            //     return orderItem;
+            // });
+            // _orderItems = orderItems;
+            // return updatedOrderItem;
+            return null;
         }
 
         public bool DeleteOne(Guid id)
@@ -65,8 +66,8 @@ namespace CodeCrafters_backend_teamwork.src.Repository
             OrderItem? orderItem = FindOne(id);
             if (orderItem is null) return false;
 
-            var orderItems = _orderItems.Where(orderItem => orderItem.Id != id);
-            _orderItems = orderItems;
+            _orderItems.Remove(orderItem);
+            _databaseContext.SaveChanges();
             return true;
 
         }

@@ -18,13 +18,18 @@ namespace CodeCrafters_backend_teamwork.src.Mappers
 
             CreateMap<StockCreateDto, Stock>();
             CreateMap<Stock, StockReadDto>();
+
             CreateMap<CategoryReadDto, Category>();
+            CreateMap<CategoryCreateDto, Category>();
+
             CreateMap<Category, CategoryReadDto>();
             CreateMap<CategoryUpdateDto, Category>();
+            
+
             CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
             CreateMap<OrderCheckout, OrderCheckoutUpdateDto>();
 
-            
+
 
         }
     }

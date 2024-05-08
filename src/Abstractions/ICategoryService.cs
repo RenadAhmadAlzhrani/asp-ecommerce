@@ -9,7 +9,7 @@ namespace CodeCrafters_backend_teamwork.src.Abstractions
         public IEnumerable<CategoryReadDto> FindMany();
         public Category? FindOne(Guid categoryId);
 
-        public CategoryReadDto CreateOne(CategoryCreateDto newCategory);
+        public IEnumerable<CategoryReadDto> CreateOne(CategoryCreateDto newCategory);
 
         public Category UpdateOne(Guid categoryId, Category updatedCategory);
 

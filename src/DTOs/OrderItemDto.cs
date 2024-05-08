@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace CodeCrafters_backend_teamwork.src.DTO
 {
-    public class OrderItemDto
+    public class OrderItemCreateDto
     {
-        public string ProductId { get; set; }
         public int Quantity { get; set; }
-        public double UnitPrice { get; set; }
-
-
+        public Guid StockId { get; set; }
+        public double Price { get; set; }
+        public Guid OrderCheckoutId { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace CodeCrafters_backend_teamwork.src.Entities
         public string Size { get; set; }
         [Required, MaxLength(15)]
         public string Color { get; set; }
-        [MaxLength(3)]
-        public string? Discount { get; set; }
+        public string? Discount { get; }
+        public int Quantity { get; set; }
 
     }
 }

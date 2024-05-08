@@ -1,30 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http.HttpResults;
+using System.ComponentModel.DataAnnotations;
 
 namespace CodeCrafters_backend_teamwork.src.Entities;
 
-    public class OrderCheckout 
-    {
-        public Guid Id {get ; set;}
-        public int PaymentId {get ; set;}
-        public Guid UserId {get ; set;}
-        public int ShippingId {get ; set;}
-        public string Status {get ; set;}
-        public double TotalPrice {get ; set;}
+public class OrderCheckout
+{
+    [Key, Required]
+    public Guid Id { get; set; }
 
-        public OrderCheckout( DateTime createdAt ,Guid userId , int shippingId ,int paymentId, string status ,double totalPrice)
-    {
-        Id = Guid.NewGuid();
-        PaymentId =  paymentId;
-        UserId = userId;
-        ShippingId = shippingId;
-        Status = status;
-        TotalPrice = totalPrice; 
-    }
+    [Required]
+    public Guid PaymentId { get; set; }
+    [Required]
+    public Guid UserId { get; set; }
+    [Required]
+    public Guid ShippingId { get; set; }
+    [MaxLength(50), Required]
 
-    }
+    public string Status { get; set; }
+    [Required]
+    public double TotalPrice { get; set; }
+    public List<OrderItem> OrderItems { get; set; }
 
-    
+}
+

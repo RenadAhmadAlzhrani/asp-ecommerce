@@ -1,25 +1,26 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CodeCrafters_backend_teamwork.src.Abstractions;
 using CodeCrafters_backend_teamwork.src.Databases;
 using CodeCrafters_backend_teamwork.src.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodeCrafters_backend_teamwork.src.Reository
 {
     public class OrderCheckoutRepo : IOrderCheckoutRepository
     {
-        private IEnumerable<OrderCheckout> _checkouts = [];
+        private DbSet<OrderCheckout> _checkouts;
 
-        public OrderCheckoutRepo()
+        private DatabaseContext _databaseContext;
+
+        public OrderCheckoutRepo(DatabaseContext databaseContext)
         {
-            _checkouts = [];
+            _databaseContext = databaseContext;
+            _checkouts = databaseContext.OrderCheckouts;
         }
 
         public IEnumerable<OrderCheckout> CreateOne(OrderCheckout newOrderCheckout)
         {
-            _checkouts = _checkouts.Append(newOrderCheckout);
+            _checkouts.Add(newOrderCheckout);
+            _databaseContext.SaveChanges();
             return _checkouts;
         }
 
@@ -35,8 +36,13 @@ namespace CodeCrafters_backend_teamwork.src.Reository
 
         public IEnumerable<OrderCheckout>? DeleteOne(Guid orderCheckoutId)
         {
+            var foundOrderCheckout = FindOne(orderCheckoutId);
 
-            _checkouts.Where((o) => o.Id != orderCheckoutId);
+            if (foundOrderCheckout != null)
+            {
+                _checkouts.Remove(foundOrderCheckout);
+            }
+            _databaseContext.SaveChanges();
             return _checkouts;
 
         }
