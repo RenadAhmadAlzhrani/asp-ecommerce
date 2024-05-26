@@ -16,7 +16,7 @@ public class DatabaseContext : DbContext
     public DbSet<OrderCheckout> OrderCheckouts { get; set; }
     public DbSet<Category> Category { get; set; }
 
-    public DatabaseContext(IConfiguration config)
+    public DatabaseContext(DbContextOptions options, IConfiguration config) : base(options)
     {
         _config = config;
     }
@@ -24,12 +24,7 @@ public class DatabaseContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
 
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(@$"Host={_config["Db:Host"]};Username={_config["Db:Username"]};
-        Database={_config["Db:Database"]};Password={_config["Db:Password"]}");
-        dataSourceBuilder.MapEnum<Role>();
-        var dataSource = dataSourceBuilder.Build();
-
-        optionsBuilder.UseNpgsql(dataSource).UseSnakeCaseNamingConvention();
+        optionsBuilder.UseSnakeCaseNamingConvention();
 
     }
 

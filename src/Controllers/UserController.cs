@@ -105,6 +105,7 @@ public class UserController : CustomizedController
 
       if (user is not null)
       {
+         Console.WriteLine($"Receive user data");
          var createdUser = _userService.SignUp(user);
          return CreatedAtAction(nameof(SignUp), createdUser);
       }

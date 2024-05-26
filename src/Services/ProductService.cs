@@ -21,9 +21,14 @@ public class ProductService : IProductService
         _productRepository = productRepository;
         _mapper = mapper;
     }
-    public IEnumerable<ProductReadDto> FindMany()
+    public IEnumerable<ProductReadDto> FindMany(string? searchBy)
     {
         IEnumerable<Product> products = _productRepository.FindMany();
+        if (searchBy is not null)
+        {
+            products = products.Where(product => product.Name.ToLower().Contains(searchBy.ToLower()));
+
+        }
         return products.Select(_mapper.Map<ProductReadDto>);
     }
     public ProductReadDto CreateOne(ProductCreateDto newProduct)

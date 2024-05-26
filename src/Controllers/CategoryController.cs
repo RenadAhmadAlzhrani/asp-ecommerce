@@ -54,8 +54,6 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
         }
 
-
-
         [HttpDelete("{categoryId}")]
         public IEnumerable<Category>? DeleteCategory([FromRoute] Guid categoryId)
         {

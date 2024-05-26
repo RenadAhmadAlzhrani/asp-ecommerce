@@ -87,7 +87,7 @@ public class UserService : IUserService
 
         user.Password = hashedPassword;
         User mappedUser = _mapper.Map<User>(user);
-        User newUser = _userRepository.CreateOne(mappedUser);
+        var newUser = _userRepository.CreateOne(mappedUser);
         UserReadDto userRead = _mapper.Map<UserReadDto>(newUser);
 
         return userRead;
