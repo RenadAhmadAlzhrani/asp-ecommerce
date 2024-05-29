@@ -22,7 +22,7 @@ namespace CodeCrafters_backend_teamwork.src.Controller
 
             _categoryService = categoryService;
         }
-        [Authorize]
+
         [HttpGet]
         public ActionResult<IEnumerable<CategoryReadDto>> FindMany()
         {
